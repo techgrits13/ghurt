@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GHURT Admin Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg0: #0a0c11;
+    --bg1: #111520;
+    --bg2: #171c2b;
+    --bg3: #1e2538;
+    --border: rgba(255,255,255,0.07);
+    --accent: #6c63ff;
+    --accent2: #a78bfa;
+    --green: #22c55e;
+    --red: #ef4444;
+    --yellow: #f59e0b;
+    --cyan: #06b6d4;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #475569;
+    --radius: 12px;
+    --glow: 0 0 40px rgba(108,99,255,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg0); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+  /* ── LOGIN ── */
+  #login-screen {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 50% 0%, rgba(108,99,255,0.15) 0%, transparent 70%);
+  }
+  .login-card {
+    background: var(--bg1); border: 1px solid var(--border); border-radius: 20px;
+    padding: 48px; width: 420px; text-align: center;
+    box-shadow: var(--glow), 0 24px 60px rgba(0,0,0,0.5);
+  }
+  .login-card h1 { font-size: 2rem; font-weight: 700; margin-bottom: 6px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .login-card p { color: var(--text2); margin-bottom: 32px; font-size: 0.9rem; }
+  .field { text-align: left; margin-bottom: 16px; }
+  .field label { display: block; font-size: 0.8rem; color: var(--text2); margin-bottom: 6px; font-weight: 500; }
+  .field input {
+    width: 100%; padding: 12px 14px; background: var(--bg2);
+    border: 1px solid var(--border); border-radius: 8px; color: var(--text);
+    font-size: 0.9rem; outline: none; transition: border-color 0.2s;
+  }
+  .field input:focus { border-color: var(--accent); }
+  .btn-primary {
+    width: 100%; padding: 13px; background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none; border-radius: 10px; color: #fff; font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; transition: opacity 0.2s, transform 0.15s; margin-top: 8px;
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .login-error { color: var(--red); font-size: 0.85rem; margin-top: 12px; }
+
+  /* ── LAYOUT ── */
+  #app { display: flex; min-height: 100vh; }
+  #sidebar {
+    width: 240px; flex-shrink: 0; background: var(--bg1);
+    border-right: 1px solid var(--border); display: flex; flex-direction: column;
+    padding: 24px 0; position: fixed; height: 100vh; overflow-y: auto; z-index: 10;
+  }
+  .sidebar-logo {
+    padding: 0 24px 24px; border-bottom: 1px solid var(--border); margin-bottom: 16px;
+  }
+  .sidebar-logo span {
+    font-size: 1.3rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .sidebar-logo sub { display: block; font-size: 0.7rem; color: var(--text3); font-weight: 400;
+    -webkit-text-fill-color: var(--text3); margin-top: 2px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 24px;
+    cursor: pointer; color: var(--text2); font-size: 0.88rem; font-weight: 500;
+    border-left: 2px solid transparent; transition: all 0.15s;
+  }
+  .nav-item:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+  .nav-item.active { color: var(--accent2); border-left-color: var(--accent); background: rgba(108,99,255,0.08); }
+  .nav-icon { font-size: 1.1rem; width: 20px; text-align: center; }
+  .sidebar-bottom { margin-top: auto; padding: 16px 24px; border-top: 1px solid var(--border); }
+  .admin-badge { font-size: 0.75rem; color: var(--text3); }
+  .admin-name { font-size: 0.85rem; font-weight: 600; color: var(--text2); }
+  #logout-btn {
+    margin-top: 10px; width: 100%; padding: 8px; background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.2); border-radius: 8px; color: var(--red);
+    font-size: 0.8rem; cursor: pointer; transition: background 0.2s;
+  }
+  #logout-btn:hover { background: rgba(239,68,68,0.2); }
+
+  /* ── MAIN ── */
+  #main { margin-left: 240px; flex: 1; padding: 32px; min-height: 100vh; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .page-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+  .page-sub { color: var(--text2); font-size: 0.875rem; margin-bottom: 28px; }
+
+  /* ── STAT CARDS ── */
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  .stat-card {
+    background: var(--bg1); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px; position: relative; overflow: hidden;
+  }
+  .stat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+  .stat-label { font-size: 0.75rem; color: var(--text2); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-value { font-size: 2rem; font-weight: 700; margin: 8px 0 4px; }
+  .stat-sub { font-size: 0.78rem; color: var(--text3); }
+  .stat-green .stat-value { color: var(--green); }
+  .stat-red .stat-value { color: var(--red); }
+  .stat-yellow .stat-value { color: var(--yellow); }
+  .stat-cyan .stat-value { color: var(--cyan); }
+  .stat-accent .stat-value { color: var(--accent2); }
+
+  /* ── TABLES ── */
+  .card {
+    background: var(--bg1); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 20px;
+  }
+  .card-header {
+    padding: 16px 20px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-title { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+  .card-body { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  th { padding: 10px 16px; text-align: left; color: var(--text3); font-weight: 500;
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border); }
+  td { padding: 11px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); color: var(--text2); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 8px; border-radius: 20px; font-size: 0.72rem; font-weight: 600;
+  }
+  .badge-green { background: rgba(34,197,94,0.12); color: var(--green); }
+  .badge-red { background: rgba(239,68,68,0.12); color: var(--red); }
+  .badge-yellow { background: rgba(245,158,11,0.12); color: var(--yellow); }
+  .badge-blue { background: rgba(108,99,255,0.15); color: var(--accent2); }
+  .badge-gray { background: rgba(148,163,184,0.1); color: var(--text2); }
+
+  /* ── BUTTONS ── */
+  .btn { padding: 6px 14px; border-radius: 7px; font-size: 0.78rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; }
+  .btn-danger { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+  .btn-danger:hover { background: rgba(239,68,68,0.25); }
+  .btn-success { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+  .btn-success:hover { background: rgba(34,197,94,0.25); }
+  .btn-warn { background: rgba(245,158,11,0.15); color: var(--yellow); border: 1px solid rgba(245,158,11,0.3); }
+  .btn-warn:hover { background: rgba(245,158,11,0.25); }
+  .btn-purple { background: rgba(108,99,255,0.2); color: var(--accent2); border: 1px solid rgba(108,99,255,0.4); }
+  .btn-purple:hover { background: rgba(108,99,255,0.3); }
+  .btn-sm { padding: 4px 10px; font-size: 0.72rem; }
+  .refresh-btn {
+    padding: 7px 14px; background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text2); font-size: 0.8rem; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .refresh-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    z-index: 100; align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
+    padding: 32px; width: 460px; max-width: 95vw;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  }
+  .modal h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
+  .modal textarea, .modal input, .modal select {
+    width: 100%; padding: 10px 12px; background: var(--bg3);
+    border: 1px solid var(--border); border-radius: 8px; color: var(--text);
+    font-size: 0.85rem; font-family: inherit; outline: none; margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+  .modal textarea:focus, .modal input:focus, .modal select:focus { border-color: var(--accent); }
+  .modal textarea { min-height: 80px; resize: vertical; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 4px; }
+  .modal label { display: block; font-size: 0.78rem; color: var(--text2); margin-bottom: 5px; font-weight: 500; }
+
+  /* ── MISC ── */
+  .loading { text-align: center; padding: 40px; color: var(--text3); font-size: 0.9rem; }
+  .empty { text-align: center; padding: 32px; color: var(--text3); font-size: 0.88rem; }
+  .section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 1100px) { .section-grid { grid-template-columns: 1fr; } }
+  .search-input {
+    padding: 8px 12px; background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-size: 0.85rem; outline: none; width: 220px;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .truncate { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mono { font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.78rem; }
+  .pulse::before { content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--green); margin-right: 6px; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+  #toast {
+    position: fixed; bottom: 24px; right: 24px; padding: 12px 20px;
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
+    color: var(--text); font-size: 0.85rem; box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    opacity: 0; transition: opacity 0.3s; z-index: 200; max-width: 320px;
+  }
+  #toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <h1>GHURT</h1>
+    <p>Admin Dashboard — Restricted Access</p>
+    <div class="field"><label>Email</label><input type="email" id="login-email" placeholder="admin@example.com"></div>
+    <div class="field"><label>Password</label><input type="password" id="login-pass" placeholder="••••••••"></div>
+    <button class="btn-primary" onclick="doLogin()">Sign In</button>
+    <div class="login-error" id="login-err"></div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none">
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sidebar-logo">
+      <span>GHURT</span>
+      <sub>Admin Control Panel</sub>
+    </div>
+    <div class="nav-item active" onclick="showSection('overview')" id="nav-overview">
+      <span class="nav-icon">🏠</span> Overview
+    </div>
+    <div class="nav-item" onclick="showSection('transactions')" id="nav-transactions" style="display:none">
+      <span class="nav-icon">💳</span> Transactions
+    </div>
+    <div class="nav-item" onclick="showSection('disputes')" id="nav-disputes">
+      <span class="nav-icon">⚖️</span> Disputes
+    </div>
+    <div class="nav-item" onclick="showSection('appeals')" id="nav-appeals">
+      <span class="nav-icon">✉️</span> Appeals
+    </div>
+    <div class="nav-item" onclick="showSection('payments')" id="nav-payments" style="display:none">
+      <span class="nav-icon">💰</span> Payments
+    </div>
+    <div class="nav-item" onclick="showSection('users')" id="nav-users">
+      <span class="nav-icon">👥</span> Users
+    </div>
+    <div class="nav-item" onclick="showSection('games')" id="nav-games">
+      <span class="nav-icon">🎮</span> Live Games
+    </div>
+    <div class="nav-item" onclick="showSection('audit')" id="nav-audit">
+      <span class="nav-icon">📋</span> Audit Log
+    </div>
+    <div class="sidebar-bottom">
+      <div class="admin-badge">ADMIN</div>
+      <div class="admin-name" id="admin-name">Loading…</div>
+      <button id="logout-btn" onclick="doLogout()">Sign Out</button>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main id="main">
+
+    <!-- OVERVIEW -->
+    <div class="section active" id="section-overview">
+      <div class="page-title">Overview</div>
+      <div class="page-sub">Platform health and player-safety summary</div>
+      <div class="stat-grid" id="stat-grid">
+        <div class="stat-card stat-cyan"><div class="stat-label">App Installs</div><div class="stat-value" id="s-installs">—</div><div class="stat-sub">Unique registered devices</div></div>
+        <div class="stat-card stat-green"><div class="stat-label">Daily Active Devices</div><div class="stat-value" id="s-dau">—</div><div class="stat-sub">Seen today (UTC)</div></div>
+        <div class="stat-card stat-cyan"><div class="stat-label">Total Users</div><div class="stat-value" id="s-totalusers">—</div><div class="stat-sub">Registered accounts</div></div>
+        <div class="stat-card stat-yellow"><div class="stat-label">Active Games</div><div class="stat-value" id="s-livegames"><span class="pulse"></span>—</div><div class="stat-sub">Currently playing</div></div>
+        <div class="stat-card stat-red"><div class="stat-label">Stuck Games</div><div class="stat-value" id="s-stuckgames">—</div><div class="stat-sub">&gt;30 min inactive</div></div>
+      </div>
+      <div class="section-grid">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Pending Disputes (Under 14 Days)</div><button class="refresh-btn" onclick="loadOverview()">↻ Refresh</button></div>
+          <div class="card-body"><div id="ov-disputes" class="loading">Loading…</div></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Recent Pending Withdrawals</div></div>
+          <div class="card-body"><div id="ov-withdrawals" class="loading">Loading…</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRANSACTIONS -->
+    <div class="section" id="section-transactions" style="display:none">
+      <div class="page-title">Transaction Ledger</div>
+      <div class="page-sub">Search per-user transaction history</div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">User Ledger</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input class="search-input" id="tx-user-id" placeholder="Paste User ID…">
+            <button class="btn btn-purple" onclick="loadUserTx()">Load</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="tx-table" class="empty">Enter a User ID above to view their transactions.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DISPUTES -->
+    <div class="section" id="section-disputes">
+      <div class="page-title">Dispute Queue</div>
+      <div class="page-sub">Pending and escalated disputes (filtered if older than 2 weeks)</div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Open Disputes</div>
+          <button class="refresh-btn" onclick="loadDisputes()">↻ Refresh</button>
+        </div>
+        <div class="card-body"><div id="disputes-table" class="loading">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- APPEALS -->
+    <div class="section" id="section-appeals">
+      <div class="page-title">Suspension Appeals</div>
+      <div class="page-sub">Pending requests from suspended users asking to restore their accounts</div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Active Appeals</div>
+          <button class="refresh-btn" onclick="loadAppeals()">↻ Refresh</button>
+        </div>
+        <div class="card-body"><div id="appeals-table" class="loading">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- PAYMENTS -->
+    <div class="section" id="section-payments" style="display:none">
+      <div class="page-title">Archived financial tools</div>
+      <div class="page-sub">Disabled while CardFlow is casual-play only</div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Pending Deposits</div><button class="refresh-btn" onclick="loadPayments()">↻ Refresh</button></div>
+        <div class="card-body"><div id="deposits-table" class="loading">Loading…</div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Pending Withdrawals</div></div>
+        <div class="card-body"><div id="withdrawals-table" class="loading">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- USERS -->
+    <div class="section" id="section-users">
+      <div class="page-title">User Management</div>
+      <div class="page-sub">Search users, freeze wallets, suspend accounts, and restore access</div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Users</div>
+          <div style="display:flex;gap:8px">
+            <input class="search-input" id="user-search" placeholder="Search by name…" oninput="debounceSearch()">
+          </div>
+        </div>
+        <div class="card-body"><div id="users-table" class="loading">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- LIVE GAMES -->
+    <div class="section" id="section-games">
+      <div class="page-title">Live Games Monitor</div>
+      <div class="page-sub">Active casual multiplayer games</div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><span class="pulse"></span>Live Games</div>
+          <button class="refresh-btn" onclick="loadGames()">↻ Refresh</button>
+        </div>
+        <div class="card-body"><div id="games-table" class="loading">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- AUDIT LOG -->
+    <div class="section" id="section-audit">
+      <div class="page-title">Audit Log</div>
+      <div class="page-sub">Immutable record of all admin actions</div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">All Admin Actions</div>
+          <button class="refresh-btn" onclick="loadAudit()">↻ Refresh</button>
+        </div>
+        <div class="card-body"><div id="audit-table" class="loading">Loading…</div></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h3 id="modal-title">Action</h3>
+    <div id="modal-body"></div>
+    <div class="modal-actions">
+      <button class="btn btn-danger" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-success" id="modal-confirm-btn" onclick="execModal()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script type="module">
+// ── CONFIG ──────────────────────────────────────────────────────
+const SUPABASE_URL  = 'https://rrxbxzgapyzltncwclfj.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyeGJ4emdhcHl6bHRuY3djbGZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA2MDk1MDYsImV4cCI6MjA5NjE4NTUwNn0.if7fXEq_E1cONQRsS08ghTO2qKAwrAWEezu75YXoS9w';
+const ADMIN_URL     = `${SUPABASE_URL}/functions/v1/admin-api`;
+
+let accessToken = null;
+
+// ── AUTH ─────────────────────────────────────────────────────────
+window.doLogin = async () => {
+  const email = document.getElementById('login-email').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  const err   = document.getElementById('login-err');
+  err.textContent = '';
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON },
+      body: JSON.stringify({ email, password: pass }),
+    });
+    const data = await res.json();
+    if (!res.ok) { err.textContent = data.error_description ?? 'Login failed'; return; }
+    accessToken = data.access_token;
+
+    // Verify admin (gracefully handles missing edge function)
+    let check: any = {};
+    try {
+      check = await adminGet('financial_summary');
+    } catch (_) {}
+    if (check && check.error === 'Forbidden — admin access only') {
+      err.textContent = 'Forbidden — admin access only.';
+      accessToken = null;
+      return;
+    }
+
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    document.getElementById('admin-name').textContent = email;
+    loadOverview();
+    loadDisputes();
+    loadAppeals();
+    loadPayments();
+    loadUsers();
+    loadGames();
+    loadAudit();
+  } catch (e) {
+    err.textContent = 'Network error. Check your connection.';
+  }
+};
+
+window.doLogout = () => {
+  accessToken = null;
+  location.reload();
+};
+
+// ── API HELPERS ───────────────────────────────────────────────────
+async function adminGet(op, params = {}) {
+  const url = new URL(ADMIN_URL);
+  url.searchParams.set('op', op);
+  for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${accessToken}` } });
+  return res.json();
+}
+
+async function adminPost(op, body) {
+  const res = await fetch(`${ADMIN_URL}?op=${op}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
+    body: JSON.stringify(body),
+  });
+  return res.json();
+}
+
+// ── NAV ──────────────────────────────────────────────────────────
+window.showSection = (id) => {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(`section-${id}`).classList.add('active');
+  document.getElementById(`nav-${id}`).classList.add('active');
+};
+
+// ── TOAST ────────────────────────────────────────────────────────
+function toast(msg, type = 'info') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.style.borderColor = type === 'error' ? 'rgba(239,68,68,0.4)' : type === 'success' ? 'rgba(34,197,94,0.4)' : 'var(--border)';
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+// ── MODAL ────────────────────────────────────────────────────────
+let modalAction = null;
+window.closeModal = () => document.getElementById('modal-overlay').classList.remove('open');
+window.execModal  = async () => {
+  if (!modalAction) return;
+  const result = await modalAction();
+  if (result?.error) { toast(result.error, 'error'); return; }
+  toast('Done!', 'success');
+  closeModal();
+  loadOverview(); loadDisputes(); loadAppeals(); loadPayments(); loadUsers(); loadGames(); loadAudit();
+};
+function openModal(title, bodyHtml, action) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = bodyHtml;
+  modalAction = action;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+// ── FORMATTERS ────────────────────────────────────────────────────
+const fmt  = n => n !== null && n !== undefined ? Number(n).toLocaleString('en-KE', {minimumFractionDigits:2}) : '—';
+const fmtT = t => t ? new Date(t).toLocaleString('en-GB', {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : '—';
+const badge = (val, map) => {
+  const m = map[val] ?? ['badge-gray', val];
+  return `<span class="badge ${m[0]}">${m[1] ?? val}</span>`;
+};
+const statusBadge = s => badge(s, {
+  COMPLETE: ['badge-green','✓ Complete'], PAID: ['badge-green','✓ Paid'],
+  PENDING:  ['badge-yellow','⏳ Pending'], PROCESSING: ['badge-blue','⚙ Processing'],
+  FAILED:   ['badge-red','✗ Failed'],
+  completed:['badge-green','✓ Done'], pending:['badge-yellow','⏳ Pending'],
+  failed:   ['badge-red','✗ Failed'],
+});
+const truncId = id => id ? `<span class="mono truncate" title="${id}">${id.slice(0,8)}…</span>` : '—';
+
+// ── OVERVIEW ─────────────────────────────────────────────────────
+window.loadOverview = async () => {
+  const [fin, games] = await Promise.all([
+    adminGet('financial_summary'),
+    adminGet('live_games'),
+  ]);
+  document.getElementById('s-deposits')?.textContent   = fmt(fin.total_deposits);
+  document.getElementById('s-withdrawals')?.textContent = fmt(fin.total_withdrawals);
+  document.getElementById('s-fees')?.textContent       = fmt(fin.total_fees);
+  document.getElementById('s-totalusers').textContent    = fin.total_users ?? '—';
+  document.getElementById('s-livegames').innerHTML    = `<span class="pulse"></span>${games.live_games ?? '—'}`;
+  document.getElementById('s-stuckgames').textContent = games.stuck_games ?? '—';
+
+  const d = await adminGet('disputes');
+  document.getElementById('ov-disputes').innerHTML = renderDisputeTable(Array.isArray(d) ? d.slice(0,5) : [], true);
+  const w = await adminGet('pending_withdrawals');
+  document.getElementById('ov-withdrawals')?.innerHTML = renderWithdrawTable(Array.isArray(w) ? w.slice(0,5) : [], true);
+  const devices = await adminGet('device_analytics');
+  document.getElementById('s-installs').textContent = devices.installs ?? '—';
+  document.getElementById('s-dau').textContent = devices.dau ?? '—';
+};
+
+// ── TRANSACTIONS ──────────────────────────────────────────────────
+window.loadUserTx = async () => {
+  const uid = document.getElementById('tx-user-id').value.trim();
+  if (!uid) return;
+  document.getElementById('tx-table').innerHTML = '<div class="loading">Loading…</div>';
+  const data = await adminGet('user_transactions', { user_id: uid });
+  if (!Array.isArray(data) || data.length === 0) {
+    document.getElementById('tx-table').innerHTML = '<div class="empty">No transactions found.</div>';
+    return;
+  }
+  document.getElementById('tx-table').innerHTML = `
+    <table><thead><tr>
+      <th>Time</th><th>Type</th><th>Amount (KES)</th><th>Balance After</th><th>Status</th>
+    </tr></thead><tbody>${data.map(t => `<tr>
+      <td>${fmtT(t.created_at)}</td>
+      <td><span class="badge badge-blue">${t.transaction_type}</span></td>
+      <td style="color:var(--text)">${fmt(t.amount)}</td>
+      <td>${fmt(t.balance_after)}</td>
+      <td>${statusBadge(t.status)}</td>
+    </tr>`).join('')}</tbody></table>`;
+};
+
+// ── DISPUTES ──────────────────────────────────────────────────────
+function renderDisputeTable(data, compact) {
+  if (!data.length) return '<div class="empty">No open disputes 🎉</div>';
+  return `<table><thead><tr>
+    <th>ID</th><th>Type</th><th>Status</th><th>Created</th>${compact?'':'<th>Actions</th>'}
+  </tr></thead><tbody>${data.map(d => `<tr>
+    <td>${truncId(d.id)}</td>
+    <td><span class="badge badge-yellow">${d.dispute_type}</span></td>
+    <td>${badge(d.status, {pending:['badge-yellow','Pending'],escalated:['badge-red','Escalated'],resolved:['badge-green','Resolved']})}</td>
+    <td>${fmtT(d.created_at)}</td>
+    ${compact?'':`<td>
+      <button class="btn btn-success btn-sm" onclick="resolveDispute('${d.id}','refund_both')">Refund Both</button>
+      <button class="btn btn-purple btn-sm" onclick="resolveDispute('${d.id}','award_winner')">Award Winner</button>
+      <button class="btn btn-danger btn-sm" onclick="resolveDispute('${d.id}','ban_both')">Ban Both</button>
+    </td>`}
+  </tr>`).join('')}</tbody></table>`;
+}
+
+window.loadDisputes = async () => {
+  const data = await adminGet('disputes');
+  document.getElementById('disputes-table').innerHTML = renderDisputeTable(Array.isArray(data) ? data : [], false);
+};
+
+window.resolveDispute = (id, action) => {
+  openModal(`Resolve Dispute — ${action}`,
+    `<label>Reason for resolution</label>
+     <textarea id="m-reason" placeholder="Explain your decision…"></textarea>`,
+    async () => adminPost('resolve_dispute', {
+      dispute_id: id, action, reason: document.getElementById('m-reason').value,
+    })
+  );
+};
+
+// ── APPEALS ───────────────────────────────────────────────────────
+window.loadAppeals = async () => {
+  const data = await adminGet('appeals');
+  const arr = Array.isArray(data) ? data : [];
+  document.getElementById('appeals-table').innerHTML = arr.length
+    ? `<table><thead><tr><th>User</th><th>Email</th><th>Reason</th><th>Submitted</th><th>Actions</th></tr></thead><tbody>
+      ${arr.map(a => `<tr>
+        <td>${truncId(a.user_id)}</td>
+        <td class="mono">${a.email}</td>
+        <td>${a.reason}</td>
+        <td>${fmtT(a.created_at)}</td>
+        <td>
+          <button class="btn btn-success btn-sm" onclick="handleAppeal('${a.id}','approve')">Approve (Restore)</button>
+          <button class="btn btn-danger btn-sm" onclick="handleAppeal('${a.id}','reject')">Reject</button>
+        </td>
+      </tr>`).join('')}</tbody></table>`
+    : '<div class="empty">No pending appeals.</div>';
+};
+
+window.handleAppeal = (id, action) => {
+  openModal(`${action === 'approve' ? 'Approve Appeal' : 'Reject Appeal'}`,
+    `<label>Admin Notes / Reason</label>
+     <textarea id="m-reason" placeholder="Add optional details…"></textarea>`,
+    async () => adminPost('resolve_appeal', {
+      appeal_id: id, action, reason: document.getElementById('m-reason').value,
+    })
+  );
+};
+
+// ── PAYMENTS ─────────────────────────────────────────────────────
+function renderWithdrawTable(data, compact) {
+  if (!data.length) return '<div class="empty">No pending withdrawals.</div>';
+  return `<table><thead><tr>
+    <th>User</th><th>Amount</th><th>Phone</th><th>Time</th><th>Status</th>
+  </tr></thead><tbody>${data.map(w => `<tr>
+    <td>${truncId(w.user_id)}</td>
+    <td style="color:var(--red);font-weight:600">KES ${fmt(w.amount)}</td>
+    <td class="mono">${w.phone}</td>
+    <td>${fmtT(w.created_at)}</td>
+    <td>${statusBadge(w.status)}</td>
+  </tr>`).join('')}</tbody></table>`;
+}
+
+window.loadPayments = async () => {
+  const [deps, wdrs] = await Promise.all([adminGet('pending_deposits'), adminGet('pending_withdrawals')]);
+  const dArr = Array.isArray(deps) ? deps : [];
+  document.getElementById('deposits-table').innerHTML = dArr.length
+    ? `<table><thead><tr><th>User</th><th>Invoice</th><th>Amount</th><th>Phone</th><th>Created</th></tr></thead><tbody>
+      ${dArr.map(d => `<tr>
+        <td>${truncId(d.user_id)}</td>
+        <td class="mono">${d.invoice_id ?? '—'}</td>
+        <td style="color:var(--green);font-weight:600">KES ${fmt(d.amount)}</td>
+        <td>${d.phone ?? '—'}</td>
+        <td>${fmtT(d.created_at)}</td>
+      </tr>`).join('')}</tbody></table>`
+    : '<div class="empty">No pending deposits.</div>';
+  document.getElementById('withdrawals-table').innerHTML = renderWithdrawTable(Array.isArray(wdrs)?wdrs:[], false);
+};
+
+// ── USERS ────────────────────────────────────────────────────────
+let searchTimeout;
+window.debounceSearch = () => { clearTimeout(searchTimeout); searchTimeout = setTimeout(loadUsers, 400); };
+
+window.loadUsers = async () => {
+  const q = document.getElementById('user-search')?.value?.trim() ?? '';
+  const data = await adminGet('users', q ? { q } : {});
+  if (!Array.isArray(data) || !data.length) {
+    document.getElementById('users-table').innerHTML = '<div class="empty">No users found.</div>'; return;
+  }
+  document.getElementById('users-table').innerHTML = `<table><thead><tr>
+    <th>Name</th><th>Email</th><th>Balance</th><th>Status</th><th>ID</th><th>Actions</th>
+  </tr></thead><tbody>${data.map(u => `<tr>
+    <td style="font-weight:600">${u.display_name ?? '—'} ${u.is_admin?'<span class="badge badge-blue">Admin</span>':''}</td>
+    <td class="mono" style="font-size:0.78rem">${u.email ?? '—'}</td>
+    <td style="color:var(--green)">KES ${fmt(u.balance)}</td>
+    <td>${u.is_suspended ? '<span class="badge badge-red">Suspended</span>' : '<span class="badge badge-green">Active</span>'}</td>
+    <td>${truncId(u.id)}</td>
+    <td>
+      <button class="btn btn-warn btn-sm" onclick="freezeWallet('${u.id}')">Freeze</button>
+      ${u.is_suspended 
+        ? `<button class="btn btn-success btn-sm" onclick="restoreUser('${u.id}')">Restore</button>`
+        : `<button class="btn btn-danger btn-sm" onclick="suspendUser('${u.id}')">Suspend</button>`
+      }
+      <button class="btn btn-purple btn-sm" onclick="viewUserTx('${u.id}')">Ledger</button>
+    </td>
+  </tr>`).join('')}</tbody></table>`;
+};
+
+window.freezeWallet = id => openModal('Freeze Wallet',
+  `<label>Reason</label><textarea id="m-reason" placeholder="Reason for freezing…"></textarea>
+   <label><input type="checkbox" id="m-unfreeze"> Unfreeze instead</label>`,
+  () => adminPost('freeze_wallet', { user_id: id, reason: document.getElementById('m-reason').value, freeze: !document.getElementById('m-unfreeze').checked })
+);
+
+window.suspendUser = id => openModal('Suspend User Account',
+  `<label>Reason</label><textarea id="m-reason" placeholder="Why is this user being suspended?"></textarea>`,
+  () => adminPost('suspend_user', { user_id: id, reason: document.getElementById('m-reason').value })
+);
+
+window.restoreUser = id => openModal('Restore User Account',
+  `<label>Reason / Audit Note</label><textarea id="m-reason" placeholder="Reason for lifting the suspension…"></textarea>`,
+  () => adminPost('restore_user', { user_id: id, reason: document.getElementById('m-reason').value })
+);
+
+window.viewUserTx = id => {
+  document.getElementById('tx-user-id').value = id;
+  showSection('transactions');
+  loadUserTx();
+};
+
+// ── LIVE GAMES ────────────────────────────────────────────────────
+window.loadGames = async () => {
+  const stats = await adminGet('live_games');
+  // Load active casual games. The cash/staking tables are intentionally not
+  // surfaced by this dashboard anymore.
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/games?select=id,room_code,status,joined_players,updated_at&status=eq.playing&order=updated_at.asc&limit=50`, {
+    headers: { 'apikey': SUPABASE_ANON, Authorization: `Bearer ${accessToken}` }
+  });
+  const data = await res.json();
+  const now = Date.now();
+  const rows = Array.isArray(data) ? data : [];
+  document.getElementById('games-table').innerHTML = rows.length
+    ? `<table><thead><tr><th>Room Code</th><th>Players</th><th>Last Active</th><th>Stuck?</th></tr></thead><tbody>
+      ${rows.map(g => {
+        const ago = Math.floor((now - new Date(g.updated_at))/60000);
+        const stuck = ago > 30;
+        return `<tr>
+          <td style="font-weight:700;color:var(--text)">${g.room_code}</td>
+          <td>${Array.isArray(g.joined_players) ? g.joined_players.map(player => player.name || 'Player').join(' vs ') : '—'}</td>
+          <td>${ago}m ago</td>
+          <td>${stuck?'<span class="badge badge-red">⚠ Stuck</span>':'<span class="badge badge-green">Active</span>'}</td>
+        </tr>`;
+      }).join('')}</tbody></table>`
+    : '<div class="empty">No live games right now.</div>';
+};
+
+window.terminateGame = id => openModal('Force Terminate Game',
+  `<label>Reason (will refund both players stakes)</label><textarea id="m-reason" placeholder="e.g. Game stuck for 45 minutes, auto-refunding both players"></textarea>`,
+  async () => {
+    const result = await adminPost('terminate_game', { game_id: id, reason: document.getElementById('m-reason').value });
+    loadGames();
+    return result;
+  }
+);
+
+// ── AUDIT LOG ────────────────────────────────────────────────────
+window.loadAudit = async () => {
+  const data = await adminGet('audit_log', { limit: 50 });
+  document.getElementById('audit-table').innerHTML = Array.isArray(data) && data.length
+    ? `<table><thead><tr><th>Time</th><th>Action</th><th>Target Type</th><th>Target</th><th>Reason</th></tr></thead><tbody>
+      ${data.map(a => `<tr>
+        <td>${fmtT(a.created_at)}</td>
+        <td><span class="badge badge-blue">${a.action_type}</span></td>
+        <td>${a.target_type ?? '—'}</td>
+        <td>${truncId(a.target_id)}</td>
+        <td style="max-width:200px">${a.reason ?? '—'}</td>
+      </tr>`).join('')}</tbody></table>`
+    : '<div class="empty">No audit entries yet.</div>';
+};
+
+// ── KEYBOARD SHORTCUT ─────────────────────────────────────────────
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.getElementById('login-pass')?.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+// ── AUTO-REFRESH every 60s ────────────────────────────────────────
+setInterval(() => {
+  if (accessToken) { loadOverview(); loadGames(); }
+}, 60000);
+</script>
+</body>
+</html>

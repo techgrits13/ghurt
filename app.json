@@ -1,0 +1,84 @@
+{
+  "expo": {
+    "name": "Ghurt",
+    "slug": "ghurt",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": false,
+    "jsEngine": "hermes",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0a0a1a"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.texasrush.ghurt",
+      "buildNumber": "1",
+      "bitcode": false
+    },
+    "android": {
+      "package": "com.texasrush.ghurt",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0a0a1a"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.CAMERA",
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "android.permission.WAKE_LOCK",
+        "android.permission.BLUETOOTH"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-web-browser",
+      [
+        "onesignal-expo-plugin",
+        {
+          "mode": "development"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableProguardInReleaseBuilds": true,
+            "extraProguardRules": "# Expo Modules Core and SecureStore rely on Kotlin metadata, reflection, and runtime type converters.\n-keepattributes RuntimeVisibleAnnotations,RuntimeInvisibleAnnotations,Signature,InnerClasses,EnclosingMethod,*Annotation*,KotlinMetadata\n-keep class kotlin.Metadata { *; }\n-keep class kotlin.reflect.** { *; }\n-dontwarn kotlin.reflect.**\n\n-keep @expo.modules.core.interfaces.DoNotStrip class * { *; }\n-keepclassmembers class * { @expo.modules.core.interfaces.DoNotStrip *; }\n-keep class expo.modules.core.** { *; }\n-keep class expo.modules.kotlin.** { *; }\n-keep class expo.modules.securestore.** { *; }\n-keep class * implements expo.modules.kotlin.records.Record { *; }\n-keep class * extends expo.modules.kotlin.sharedobjects.SharedObject { *; }\n-keep enum * implements expo.modules.kotlin.types.Enumerable { *; }\n-keepnames class kotlin.Pair\n\n-keep,allowoptimization,allowobfuscation class * extends expo.modules.kotlin.modules.Module {\n  public <init>();\n  public expo.modules.kotlin.modules.ModuleDefinitionData definition();\n}\n-keepclassmembers class * implements expo.modules.kotlin.views.ExpoView {\n  public <init>(android.content.Context);\n  public <init>(android.content.Context, expo.modules.kotlin.AppContext);\n}\n-keepclassmembers class * {\n  expo.modules.kotlin.viewevent.ViewEventCallback *;\n  expo.modules.kotlin.viewevent.ViewEventDelegate *;\n}\n-keep class * implements expo.modules.kotlin.views.ComposeProps { *; }\n-keepnames class * implements expo.modules.kotlin.views.ExpoView { *; }"
+          }
+        }
+      ],
+      [
+        "@config-plugins/react-native-webrtc",
+        {
+          "cameraPermission": "Allow Ghurt to access your camera.",
+          "microphonePermission": "Allow Ghurt to access your microphone for voice chat."
+        }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-1258030992044122~8458370634",
+          "iosAppId": "ca-app-pub-1258030992044122~8458370634"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "e9d43a71-0dbf-4ca1-b4ad-ae41c471c032"
+      }
+    },
+    "owner": "315_315"
+  }
+}
