@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "jsEngine": "hermes",
     "splash": {
       "image": "./assets/splash-icon.png",
@@ -54,6 +54,7 @@
         "expo-build-properties",
         {
           "android": {
+            "kotlinVersion": "2.2.10",
             "enableProguardInReleaseBuilds": true,
             "extraProguardRules": "# Expo Modules Core and SecureStore rely on Kotlin metadata, reflection, and runtime type converters.\n-keepattributes RuntimeVisibleAnnotations,RuntimeInvisibleAnnotations,Signature,InnerClasses,EnclosingMethod,*Annotation*,KotlinMetadata\n-keep class kotlin.Metadata { *; }\n-keep class kotlin.reflect.** { *; }\n-dontwarn kotlin.reflect.**\n\n-keep @expo.modules.core.interfaces.DoNotStrip class * { *; }\n-keepclassmembers class * { @expo.modules.core.interfaces.DoNotStrip *; }\n-keep class expo.modules.core.** { *; }\n-keep class expo.modules.kotlin.** { *; }\n-keep class expo.modules.securestore.** { *; }\n-keep class * implements expo.modules.kotlin.records.Record { *; }\n-keep class * extends expo.modules.kotlin.sharedobjects.SharedObject { *; }\n-keep enum * implements expo.modules.kotlin.types.Enumerable { *; }\n-keepnames class kotlin.Pair\n\n-keep,allowoptimization,allowobfuscation class * extends expo.modules.kotlin.modules.Module {\n  public <init>();\n  public expo.modules.kotlin.modules.ModuleDefinitionData definition();\n}\n-keepclassmembers class * implements expo.modules.kotlin.views.ExpoView {\n  public <init>(android.content.Context);\n  public <init>(android.content.Context, expo.modules.kotlin.AppContext);\n}\n-keepclassmembers class * {\n  expo.modules.kotlin.viewevent.ViewEventCallback *;\n  expo.modules.kotlin.viewevent.ViewEventDelegate *;\n}\n-keep class * implements expo.modules.kotlin.views.ComposeProps { *; }\n-keepnames class * implements expo.modules.kotlin.views.ExpoView { *; }"
           }
