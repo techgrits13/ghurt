@@ -260,6 +260,9 @@
     <div class="nav-item" onclick="showSection('audit')" id="nav-audit">
       <span class="nav-icon">📋</span> Audit Log
     </div>
+    <div class="nav-item" onclick="showSection('tournament')" id="nav-tournament">
+      <span class="nav-icon">🏆</span> Tournaments
+    </div>
     <div class="sidebar-bottom">
       <div class="admin-badge">ADMIN</div>
       <div class="admin-name" id="admin-name">Loading…</div>
@@ -392,6 +395,33 @@
       </div>
     </div>
 
+    <!-- TOURNAMENT CONTROLS -->
+    <div class="section" id="section-tournament">
+      <div class="page-title">Tournament Controls</div>
+      <div class="page-sub">Manage weekly tournament registration, keys, and leaderboard</div>
+      <div class="section-grid">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Registration Status</div>
+            <button class="refresh-btn" onclick="loadTournament()">↻ Refresh</button>
+          </div>
+          <div class="card-body">
+            <div id="tournament-status" class="loading">Loading…</div>
+            <div style="display:flex;gap:10px;margin-top:16px">
+              <button class="btn btn-success" onclick="setTournamentOpen(true)">✅ Open Registration</button>
+              <button class="btn btn-danger" onclick="setTournamentOpen(false)">🔒 Close Registration</button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Key Holders &amp; Leaderboard</div>
+          </div>
+          <div class="card-body"><div id="tournament-keys" class="loading">Loading…</div></div>
+        </div>
+      </div>
+    </div>
+
   </main>
 </div>
 
@@ -455,6 +485,7 @@ window.doLogin = async () => {
     loadUsers();
     loadGames();
     loadAudit();
+    loadTournament();
   } catch (e) {
     err.textContent = 'Network error. Check your connection.';
   }
@@ -723,23 +754,25 @@ window.viewUserTx = id => {
 
 // ── LIVE GAMES ────────────────────────────────────────────────────
 window.loadGames = async () => {
-  const stats = await adminGet('live_games');
-  // Load active casual games. The cash/staking tables are intentionally not
-  // surfaced by this dashboard anymore.
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/games?select=id,room_code,status,joined_players,updated_at&status=eq.playing&order=updated_at.asc&limit=50`, {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/games?select=id,room_code,status,joined_players,player_count,updated_at&status=eq.playing&order=updated_at.asc&limit=50`, {
     headers: { 'apikey': SUPABASE_ANON, Authorization: `Bearer ${accessToken}` }
   });
   const data = await res.json();
   const now = Date.now();
   const rows = Array.isArray(data) ? data : [];
   document.getElementById('games-table').innerHTML = rows.length
-    ? `<table><thead><tr><th>Room Code</th><th>Players</th><th>Last Active</th><th>Stuck?</th></tr></thead><tbody>
+    ? `<table><thead><tr><th>Room Code</th><th>Players</th><th>Active</th><th>Last Active</th><th>Status</th></tr></thead><tbody>
       ${rows.map(g => {
         const ago = Math.floor((now - new Date(g.updated_at))/60000);
         const stuck = ago > 30;
+        const playerNames = Array.isArray(g.joined_players)
+          ? g.joined_players.map(p => p.name || 'Player').join(', ')
+          : '—';
+        const count = g.player_count || (Array.isArray(g.joined_players) ? g.joined_players.length : '?');
         return `<tr>
           <td style="font-weight:700;color:var(--text)">${g.room_code}</td>
-          <td>${Array.isArray(g.joined_players) ? g.joined_players.map(player => player.name || 'Player').join(' vs ') : '—'}</td>
+          <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${playerNames}">${playerNames}</td>
+          <td><span class="badge badge-blue">${count} players</span></td>
           <td>${ago}m ago</td>
           <td>${stuck?'<span class="badge badge-red">⚠ Stuck</span>':'<span class="badge badge-green">Active</span>'}</td>
         </tr>`;
@@ -748,13 +781,72 @@ window.loadGames = async () => {
 };
 
 window.terminateGame = id => openModal('Force Terminate Game',
-  `<label>Reason (will refund both players stakes)</label><textarea id="m-reason" placeholder="e.g. Game stuck for 45 minutes, auto-refunding both players"></textarea>`,
+  `<label>Reason (will refund both players match fees / coins)</label><textarea id="m-reason" placeholder="e.g. Game stuck for 45 minutes, auto-refunding both players"></textarea>`,
   async () => {
     const result = await adminPost('terminate_game', { game_id: id, reason: document.getElementById('m-reason').value });
     loadGames();
     return result;
   }
 );
+
+// ── TOURNAMENT CONTROLS ───────────────────────────────────────────
+window.loadTournament = async () => {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/get_tournament_dashboard`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON, Authorization: `Bearer ${accessToken}` },
+      body: JSON.stringify({}),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data?.message || 'Tournament RPC not available');
+
+    document.getElementById('tournament-status').innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <span style="font-size:1.5rem">${data.is_open ? '🟢' : '🔴'}</span>
+        <span style="font-weight:700;font-size:1.1rem;color:${data.is_open ? 'var(--green)' : 'var(--red)'}">
+          ${data.is_open ? 'REGISTRATION OPEN' : 'REGISTRATION CLOSED'}
+        </span>
+      </div>
+      <div style="color:var(--text2);font-size:0.88rem">
+        🔑 Keys sold this cycle: <strong style="color:var(--text)">${data.key_count ?? 0}</strong><br>
+        📊 Total points in system: <strong style="color:var(--text)">${data.points ?? 0}</strong>
+      </div>`;
+
+    const leaderboard = Array.isArray(data.leaderboard) ? data.leaderboard : [];
+    document.getElementById('tournament-keys').innerHTML = leaderboard.length
+      ? `<table><thead><tr><th>#</th><th>Player</th><th>Points</th><th>Keys</th></tr></thead><tbody>
+          ${leaderboard.map((entry, i) => `<tr>
+            <td>${i + 1}</td>
+            <td>${entry.display_name || entry.username || 'Player'}</td>
+            <td>${entry.points ?? 0}</td>
+            <td>${entry.key_count ?? 0}</td>
+          </tr>`).join('')}
+        </tbody></table>`
+      : '<div class="empty">No tournament participants yet.</div>';
+  } catch (e) {
+    document.getElementById('tournament-status').innerHTML = `<div class="empty">⚠️ Tournament RPCs not yet deployed. Run <code>supabase_migration_v9_tournament.sql</code> first.</div>`;
+    document.getElementById('tournament-keys').innerHTML = '<div class="empty">—</div>';
+  }
+};
+
+window.setTournamentOpen = async (isOpen) => {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/set_tournament_open`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON, Authorization: `Bearer ${accessToken}` },
+      body: JSON.stringify({ p_is_open: isOpen }),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      toast(err?.message || 'Failed — only tournament admins can toggle registration.', true);
+      return;
+    }
+    toast(isOpen ? '✅ Tournament registration is now OPEN' : '🔒 Tournament registration is now CLOSED');
+    loadTournament();
+  } catch (e) {
+    toast('Network error. Check console.', true);
+  }
+};
 
 // ── AUDIT LOG ────────────────────────────────────────────────────
 window.loadAudit = async () => {

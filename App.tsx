@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Platform, ActivityIndicator, Animated, FlatList, BackHandler, Alert, AppState, Image } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
@@ -11,7 +11,7 @@ import { getDeviceInfo, registerDevice } from './utils/deviceId';
 import { admobService, AD_UNIT_IDS, BannerAdSize, adsSupported as adsSupportedNative } from './services/admobService';
 import { oneSignalService } from './services/oneSignalService';
 
-// Lazy-load the Banner component — only imports when native SDK is present
+// Lazy-load the Banner component â€” only imports when native SDK is present
 // (avoids crash on Web / Expo Go where the module is unavailable)
 let BannerAd: any = null;
 try {
@@ -73,18 +73,18 @@ import { GhurtMCTSEngine } from './mctsAI';
 import { VoiceRoomManager } from './voiceRoom';
 import { RTCView } from 'react-native-webrtc';
 
-// ───────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // DiceBear Avatar Styles & Profile Card Helpers
-// ───────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const DICEBEAR_STYLES = [
-  { id: 'bottts', label: '🤖 Robots' },
-  { id: 'adventurer', label: '⚔️ Adventurers' },
-  { id: 'avataaars', label: '👤 Avataaars' },
-  { id: 'fun-emoji', label: '😜 Emojis' },
-  { id: 'lorelei', label: '✨ Anime' },
-  { id: 'pixel-art', label: '👾 Pixel Art' },
-  { id: 'notionists', label: '🎨 Notion' },
-  { id: 'big-smile', label: '😄 Big Smile' }
+  { id: 'bottts', label: 'ðŸ¤– Robots' },
+  { id: 'adventurer', label: 'âš”ï¸ Adventurers' },
+  { id: 'avataaars', label: 'ðŸ‘¤ Avataaars' },
+  { id: 'fun-emoji', label: 'ðŸ˜œ Emojis' },
+  { id: 'lorelei', label: 'âœ¨ Anime' },
+  { id: 'pixel-art', label: 'ðŸ‘¾ Pixel Art' },
+  { id: 'notionists', label: 'ðŸŽ¨ Notion' },
+  { id: 'big-smile', label: 'ðŸ˜„ Big Smile' }
 ];
 
 type MatchHistoryEntry = { id: string; playerName: string; cards: Card[]; action: 'played' | 'drew'; createdAt: number };
@@ -100,14 +100,14 @@ const getDiceBearUrl = (avatarId: string | undefined, defaultSeed: string = 'pla
 };
 
 const getRankStars = (elo: number): string => {
-  if (elo < 100) return '⭐';
-  if (elo < 300) return '⭐⭐';
-  if (elo < 600) return '⭐⭐⭐';
-  if (elo < 1000) return '⭐⭐⭐⭐';
-  if (elo < 1500) return '⭐⭐⭐⭐⭐';
-  if (elo < 2100) return '🌟🌟🌟🌟🌟';
-  if (elo < 2800) return '👑👑👑👑';
-  return '👑👑👑👑👑';
+  if (elo < 100) return 'â­';
+  if (elo < 300) return 'â­â­';
+  if (elo < 600) return 'â­â­â­';
+  if (elo < 1000) return 'â­â­â­â­';
+  if (elo < 1500) return 'â­â­â­â­â­';
+  if (elo < 2100) return 'ðŸŒŸðŸŒŸðŸŒŸðŸŒŸðŸŒŸ';
+  if (elo < 2800) return 'ðŸ‘‘ðŸ‘‘ðŸ‘‘ðŸ‘‘';
+  return 'ðŸ‘‘ðŸ‘‘ðŸ‘‘ðŸ‘‘ðŸ‘‘';
 };
 
 const calculateWinRate = (wins: number = 0, losses: number = 0): string => {
@@ -180,25 +180,25 @@ const ProfileCard = ({ user, style: containerStyle }: { user: any, style?: any }
           {username}
         </Text>
         <Text style={{ color: '#f1c40f', fontSize: 13, fontWeight: 'bold' }}>
-          💰 Net Worth: {balance.toLocaleString()} Coins
+          ðŸ’° Net Worth: {balance.toLocaleString()} Coins
         </Text>
         <Text style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: 12, marginTop: 2 }}>
-          🎖️ Rank: {rank}
+          ðŸŽ–ï¸ Rank: {rank}
         </Text>
         <Text style={{ fontSize: 12, marginTop: 1 }}>
           {stars}
         </Text>
         <Text style={{ color: '#4ade80', fontSize: 12, fontWeight: '600', marginTop: 2 }}>
-          🏆 Win Rate: {winRate} ({wins}W / {losses}L)
+          ðŸ† Win Rate: {winRate} ({wins}W / {losses}L)
         </Text>
       </View>
     </View>
   );
 };
 
-// ─────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Custom In-App Error / Alert Component
-// ─────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 interface AlertModalProps {
   visible: boolean;
   title: string;
@@ -224,9 +224,9 @@ function AlertModal({ visible, title, message, onClose, type = 'info' }: AlertMo
   );
 }
 
-// ─────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Bot count selector
-// ─────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 interface BotCountModalProps {
   visible: boolean;
   onSelect: (count: number, difficulty: 'easy' | 'medium' | 'hard') => void;
@@ -261,7 +261,7 @@ function BotCountModal({ visible, onSelect, onClose }: BotCountModalProps) {
                 fontSize: 13,
                 textTransform: 'uppercase'
               }}>
-                {d === 'easy' ? '🟢 Easy' : d === 'medium' ? '🟡 Medium' : '🔥 Hard'}
+                {d === 'easy' ? 'ðŸŸ¢ Easy' : d === 'medium' ? 'ðŸŸ¡ Medium' : 'ðŸ”¥ Hard'}
               </Text>
             </TouchableOpacity>
           ))}
@@ -273,7 +273,7 @@ function BotCountModal({ visible, onSelect, onClose }: BotCountModalProps) {
             <Text style={styles.buttonSubtext}>{n + 1} players total ({difficulty.toUpperCase()})</Text>
           </TouchableOpacity>
         ))}
-        <TouchableOpacity style={[styles.modalButton, styles.cancelButton, { marginTop: 14 }]} onPress={onClose}>
+        <TouchableOpacity style={[styles.modalButton, styles.cancelButton, { marginTop: 30 }]} onPress={onClose}>
           <Text style={styles.modalButtonText}>Cancel</Text>
         </TouchableOpacity>
       </View>
@@ -281,9 +281,9 @@ function BotCountModal({ visible, onSelect, onClose }: BotCountModalProps) {
   );
 }
 
-// ─────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Main App
-// ─────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function AppContent() {
   const [playerName, setPlayerName] = useState('');
   const [roomCode, setRoomCode] = useState('');
@@ -335,7 +335,7 @@ function AppContent() {
   const [isDeafened, setIsDeafened] = useState(false);
   const [remoteStreams, setRemoteStreams] = useState<Record<string, any>>({});
 
-  // Bot management — array now supports multiple bots
+  // Bot management â€” array now supports multiple bots
   const [botProfiles, setBotProfiles] = useState<BotProfile[]>([]);
   const botTimersRef = useRef<{ [botId: string]: NodeJS.Timeout | null }>({});
   const matchmakingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -409,6 +409,11 @@ function AppContent() {
   const [appealReason, setAppealReason] = useState('');
   const [appealStatus, setAppealStatus] = useState<'idle' | 'loading' | 'success'>('idle');
   const suspendedUserIdRef = useRef<string | null>(null);
+  // App Open ad splash gate â€” blocks UI touches while the cold-start ad is showing
+  const [appReady, setAppReady] = useState(false);
+  // Search debounce ref (300 ms) â€” prevents full-table-scans on every keystroke
+  const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
+
 
   const checkSuspension = (user: any): boolean => {
     if (user?.user_metadata?.is_suspended === 'true' || user?.user_metadata?.is_suspended === true) {
@@ -422,8 +427,25 @@ function AppContent() {
   };
 
   useEffect(() => {
-    // Initialize AdMob service
-    admobService.init();
+    // Initialize AdMob service (async â€” loads AsyncStorage cooldown timestamp)
+    // then attempt cold-start App Open ad before showing lobby.
+    // A full-screen overlay (appReady=false) blocks accidental touches until
+    // the ad is dismissed or a 5-second safety timeout fires.
+    const initAds = async () => {
+      await admobService.init();
+
+      // Safety valve: if ad never fires onWillShow/onDidClose within 5s, unblock anyway
+      const safetyTimer = setTimeout(() => setAppReady(true), 5000);
+
+      await admobService.showAppOpenAd(
+        /* onWillShow  */ () => { /* overlay already shown via appReady=false */ },
+        /* onDidClose  */ () => {
+          clearTimeout(safetyTimer);
+          setAppReady(true);
+        },
+      );
+    };
+    initAds();
 
     // Initialize OneSignal push notifications
     oneSignalService.init();
@@ -435,7 +457,7 @@ function AppContent() {
         setShowChallengeModal(true);
         setChallengeTab('incoming');
       } else if (payload.type === 'game_request_accepted') {
-        showAlert('Challenge Accepted! 🎉', `${(payload as any).from_username} accepted your challenge!`, 'info');
+        showAlert('Challenge Accepted! ðŸŽ‰', `${(payload as any).from_username} accepted your challenge!`, 'info');
       } else if (payload.type === 'game_request_declined') {
         showAlert('Challenge Declined', `${(payload as any).from_username} declined your challenge.`, 'info');
       }
@@ -463,7 +485,7 @@ function AppContent() {
       }
     });
 
-    // Load local profile — merge with defaults so old saves never crash
+    // Load local profile â€” merge with defaults so old saves never crash
     AsyncStorage.getItem('@ghurt_profile').then(data => {
       if (data) {
         try {
@@ -483,6 +505,12 @@ function AppContent() {
     };
   }, []);
 
+  // Signal AdMob service whether the user is in an active game
+  // so App Open ads are never shown during gameplay.
+  useEffect(() => {
+    admobService.setInActiveGame(gameState !== null);
+  }, [gameState]);
+
   useEffect(() => {
     // Installation and daily-activity telemetry is device based, not account
     // based. It contains no name, email, or gameplay data.
@@ -491,6 +519,7 @@ function AppContent() {
       p_device_info: info,
     })).catch(err => console.warn('Device analytics unavailable:', err));
   }, []);
+
 
   useEffect(() => {
     if (!gameState || matchHistory.length) return;
@@ -575,7 +604,7 @@ function AppContent() {
     };
   }, [authUser]);
 
-  // ─── SUBSCRIBE TO INCOMING CHALLENGES & ONLINE STATUSES ───
+  // â”€â”€â”€ SUBSCRIBE TO INCOMING CHALLENGES & ONLINE STATUSES â”€â”€â”€
   useEffect(() => {
     if (!authUser?.id) return;
 
@@ -757,7 +786,7 @@ function AppContent() {
     );
   };
 
-  // ─── SEARCH PLAYERS ───
+  // â”€â”€â”€ SEARCH PLAYERS â”€â”€â”€
   const fetchOnlineStatuses = async (userIds: string[]) => {
     const uuids = userIds.filter(id => id.match(/^[0-9a-fA-F-]{36}$/));
     if (uuids.length === 0) return;
@@ -779,14 +808,18 @@ function AppContent() {
     }
   };
 
-  const handleSearchPlayers = async () => {
-    if (!searchUsername.trim()) return;
+  const handleSearchPlayers = async (query?: string) => {
+    const searchTerm = (query !== undefined ? query : searchUsername).trim();
+    if (!searchTerm) {
+      setSearchResults([]);
+      return;
+    }
     setSearchLoading(true);
     try {
       const { data, error } = await supabase
         .from('users')
         .select('id, display_name, username, avatar_id, elo, wins, losses, balance, is_online')
-        .ilike('username', `%${searchUsername.trim()}%`)
+        .ilike('username', `%${searchTerm}%`)
         .neq('id', authUser?.id)
         .limit(10);
       if (error) throw error;
@@ -807,7 +840,7 @@ function AppContent() {
     }
   };
 
-  // ─── CHALLENGE FLOW ───
+  // â”€â”€â”€ CHALLENGE FLOW â”€â”€â”€
   const handleSendChallenge = async (targetUser: any) => {
     if (!playerName.trim()) { 
       showAlert('Name Required', 'Please enter your name first.', 'warning'); 
@@ -1076,7 +1109,7 @@ function AppContent() {
         const newElo = calculateElo(userProfile.elo, opponentElo, isWin);
         const newWins = userProfile.wins + (isWin ? 1 : 0);
         const newLosses = userProfile.losses + (isWin ? 0 : 1);
-        // IMPORTANT: Preserve current balance — do NOT overwrite coins earned
+        // IMPORTANT: Preserve current balance â€” do NOT overwrite coins earned
         // from rewarded ads before the game. Only elo/wins/losses change here.
         const newProfile = { ...userProfile, elo: newElo, wins: newWins, losses: newLosses, balance: userProfile.balance };
         saveProfile(newProfile);
@@ -1147,7 +1180,7 @@ function AppContent() {
     return code;
   };
 
-  // ─── CREATE PRIVATE ROOM ───
+  // â”€â”€â”€ CREATE PRIVATE ROOM â”€â”€â”€
   const handleCreateRoom = async () => {
     if (!playerName.trim()) { showAlert('Name Required', 'Please enter your name before creating a room.', 'warning'); return; }
     setLoading(true);
@@ -1161,7 +1194,7 @@ function AppContent() {
         status: 'waiting',
         joined_players: initialPlayers,
         player_count: 1,
-        is_private: true, // ← Private room: hidden from random matchmaking
+        is_private: true, // â† Private room: hidden from random matchmaking
         player1_id: authUser?.id || myId,
         player1_name: playerName.trim(),
       }]).select();
@@ -1179,7 +1212,7 @@ function AppContent() {
     } finally { setLoading(false); }
   };
 
-  // ─── JOIN PRIVATE ROOM ───
+  // â”€â”€â”€ JOIN PRIVATE ROOM â”€â”€â”€
   const handleJoinRoom = async () => {
     if (!playerName.trim()) { showAlert('Name Required', 'Please enter your name before joining.', 'warning'); return; }
     if (!roomCode.trim()) { showAlert('Code Required', 'Please enter a room code.', 'warning'); return; }
@@ -1217,19 +1250,19 @@ function AppContent() {
     } finally { setLoading(false); }
   };
 
-  // ─── FIND RANDOM PLAYER (Server-side atomic matchmaking, no race conditions) ───
+  // â”€â”€â”€ FIND RANDOM PLAYER (Server-side atomic matchmaking, no race conditions) â”€â”€â”€
   const handleFindRandom = async () => {
     if (!playerName.trim()) { showAlert('Name Required', 'Please enter your name first.', 'warning'); return; }
     setLoading(true);
     setIsMatchmaking(true);
 
-    // Generate a stable ID for this session — used as both player ID and host identity
+    // Generate a stable ID for this session â€” used as both player ID and host identity
     const myId = `player_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
     const myHostId = authUser?.id || myId;
     const code = generateRoomCode();
 
     try {
-      // ── STEP 1: Call the server-side atomic RPC ──
+      // â”€â”€ STEP 1: Call the server-side atomic RPC â”€â”€
       // The RPC safely finds a waiting room (not private, not ours) using FOR UPDATE SKIP LOCKED
       // and joins it atomically. If none found, it creates a new one. No client-side race condition.
       const { data: rpcResult, error: rpcError } = await supabase.rpc('join_random_game', {
@@ -1252,7 +1285,7 @@ function AppContent() {
       setIsOnline(true);
 
       if (isStart) {
-        // ── We joined an existing room: we are Player 2 ──
+        // â”€â”€ We joined an existing room: we are Player 2 â”€â”€
         // Only Player 2 initializes the game state to avoid a double-init race.
         const allPlayers: { id: string; name: string }[] = Array.isArray(game.joined_players)
           ? game.joined_players
@@ -1272,10 +1305,10 @@ function AppContent() {
         setIsWaitingForOpponent(allPlayers.length < 4);
         setIsMatchmaking(false);
       } else {
-        // ── We created a new room: we are Player 1, waiting ──
+        // â”€â”€ We created a new room: we are Player 1, waiting â”€â”€
         setIsWaitingForOpponent(true);
 
-        // ─────────────────────────────────────────────────────
+        // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         const waitingGameId = game.id;
         matchmakingTimeoutRef.current = setTimeout(async () => {
           try {
@@ -1291,7 +1324,7 @@ function AppContent() {
               // Double check if player backed out or changed rooms
               if (matchmakingTimeoutRef.current === null) return;
 
-              // Still waiting — inject exactly 1 bot for a fast 1v1 match
+              // Still waiting â€” inject exactly 1 bot for a fast 1v1 match
               const humanPlayers = Array.isArray(check[0].joined_players) ? check[0].joined_players : [{ id: myId, name: playerName }];
               const minimumPlayers = Math.max(2, humanPlayers.length);
               const targetPlayers = minimumPlayers + Math.floor(Math.random() * (5 - minimumPlayers));
@@ -1325,7 +1358,7 @@ function AppContent() {
     } finally { setLoading(false); }
   };
 
-  // ─── PLAY VS BOT ───
+  // â”€â”€â”€ PLAY VS BOT â”€â”€â”€
   const handlePlayVsBot = () => {
     if (!playerName.trim()) { showAlert('Name Required', 'Please enter your name first.', 'warning'); return; }
     setShowBotCountModal(true);
@@ -1346,7 +1379,7 @@ function AppContent() {
     setIsOnline(false);
   };
 
-  // ─── HOST START GAME ───
+  // â”€â”€â”€ HOST START GAME â”€â”€â”€
   const handleHostStartGame = async () => {
     if (!gameId) return;
     setLoading(true);
@@ -1374,55 +1407,41 @@ function AppContent() {
 
   const openTournament = async () => {
     if (!authUser) {
-      showAlert('Login Required', 'Sign in to buy a tournament key or enter the tournament.', 'warning');
+      showAlert('Login Required', 'Sign in to view tournaments.', 'warning');
       return;
     }
     setLoading(true);
     try {
       await refreshTournamentDashboard();
+    } catch {
+      // Silently ignore â€” tournament RPCs may not exist yet in this build.
+      // Modal opens with safe default state.
+      setTournamentDashboard({ is_open: false, key_count: 0, is_admin: false, points: 0, leaderboard: [] });
+    } finally {
       setShowTournamentModal(true);
-    } catch (err: any) {
-      showAlert('Tournament Unavailable', err.message || 'Run the tournament migration in Supabase before opening this screen.', 'error');
-    } finally {
       setLoading(false);
     }
   };
 
-  const buyTournamentKey = async () => {
-    setLoading(true);
-    try {
-      const { error } = await supabase.rpc('buy_tournament_key');
-      if (error) throw error;
-      const { data: fresh } = await supabase.from('users').select('balance').eq('id', authUser.id).single();
-      if (fresh?.balance !== undefined) setUserProfile(prev => ({ ...prev, balance: Number(fresh.balance) }));
-      await refreshTournamentDashboard();
-      showAlert('Key Purchased', 'Your tournament key is ready to use.', 'info');
-    } catch (err: any) {
-      showAlert('Key Purchase Failed', err.message || 'Unable to purchase a key.', 'error');
-    } finally {
-      setLoading(false);
-    }
+  const buyTournamentKey = () => {
+    // Tournament purchases are coming in the next update.
+    showAlert(
+      'ðŸ† Coming Soon',
+      'Tournament key purchases will be unlocked in the upcoming update. Stay tuned â€” championships are on the way!',
+      'info',
+    );
   };
 
-  const enterTournament = async () => {
-    if (!tournamentDashboard.is_open) {
-      showAlert('Tournament Locked', 'The administrator has not opened the tournament yet.', 'warning');
-      return;
-    }
-    setLoading(true);
-    try {
-      const { error } = await supabase.rpc('enter_tournament');
-      if (error) throw error;
-      setIsTournamentMatch(true);
-      await refreshTournamentDashboard();
-      setShowTournamentModal(false);
-      handleFindRandom();
-    } catch (err: any) {
-      showAlert('Entry Failed', err.message || 'You need a tournament key to enter.', 'error');
-    } finally {
-      setLoading(false);
-    }
+  const enterTournament = () => {
+    // Tournament entry is coming in the next update.
+    showAlert(
+      'ðŸ† Coming Soon',
+      'Tournament entry and championship events will be available in the upcoming update. Keep winning to earn your spot!',
+      'info',
+    );
   };
+
+
 
   const setTournamentOpen = async (isOpen: boolean) => {
     setLoading(true);
@@ -1528,9 +1547,9 @@ function AppContent() {
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Unknown error';
       if (msg.includes('Cannot win with a power card')) {
-        showAlert('Forbidden Finish!', 'You cannot win the game with a Power Card as your last card.\n\nPlay a standard card (4–10) to win.', 'error');
+        showAlert('Forbidden Finish!', 'You cannot win the game with a Power Card as your last card.\n\nPlay a standard card (4â€“10) to win.', 'error');
       } else if (msg.includes('Must play attack card')) {
-        showAlert('Defend Yourself!', 'You have a 2, 3, or Ace in hand — you MUST play it to defend against the attack!', 'warning');
+        showAlert('Defend Yourself!', 'You have a 2, 3, or Ace in hand â€” you MUST play it to defend against the attack!', 'warning');
       } else {
         showAlert('Error', msg, 'error');
       }
@@ -1579,7 +1598,7 @@ function AppContent() {
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Error';
       if (msg.includes('Must play attack card')) {
-        showAlert('Defend First!', 'You have a 2, 3, or Ace. You must play one of those to defend — you cannot draw while you can defend!', 'warning');
+        showAlert('Defend First!', 'You have a 2, 3, or Ace. You must play one of those to defend â€” you cannot draw while you can defend!', 'warning');
       } else {
         showAlert('Draw Error', msg, 'error');
       }
@@ -1662,7 +1681,7 @@ function AppContent() {
     }
   };
 
-  // ─── REALTIME SUBSCRIPTION ───
+  // â”€â”€â”€ REALTIME SUBSCRIPTION â”€â”€â”€
   useEffect(() => {
     if (!gameId || !isOnline) return;
     const channel = supabase.channel(`game:${gameId}`).on('postgres_changes', {
@@ -1687,7 +1706,7 @@ function AppContent() {
     return () => { supabase.removeChannel(channel); };
   }, [gameId, isOnline]);
 
-  // ─── VOICE CHAT INITIALIZATION ───
+  // â”€â”€â”€ VOICE CHAT INITIALIZATION â”€â”€â”€
   useEffect(() => {
     if (isOnline && roomCode && myPlayerId && !voiceRoomRef.current) {
       const vrm = new VoiceRoomManager(
@@ -1709,7 +1728,7 @@ function AppContent() {
     }
   }, [isOnline, roomCode, myPlayerId]);
 
-  // ─── SHUFFLE ANIMATION ───
+  // â”€â”€â”€ SHUFFLE ANIMATION â”€â”€â”€
   useEffect(() => {
     const activeGameId = gameId || 'bot-game';
     if (gameState && shuffledGameId !== activeGameId) {
@@ -1725,7 +1744,7 @@ function AppContent() {
     }
   }, [gameState, gameId, shuffledGameId]);
 
-  // ─── BOT AI TURNS ───
+  // â”€â”€â”€ BOT AI TURNS â”€â”€â”€
   useEffect(() => {
     if (!gameState || isGameOver(gameState) || !botProfiles.length || isShuffling) return;
     const currentPlayer = getCurrentPlayer(gameState);
@@ -1776,7 +1795,7 @@ function AppContent() {
         }
       } catch (e) { 
         console.warn('Bot AI execution error, applying fallback to prevent crash:', e); 
-        // ─── CRASH PREVENTION ───
+        // â”€â”€â”€ CRASH PREVENTION â”€â”€â”€
         // If a bot somehow selects an invalid move (e.g., must play an attack card but failed to),
         // we force a safe fallback (drawing a card) to ensure the turn passes and the app never soft-locks.
         try {
@@ -1799,14 +1818,14 @@ function AppContent() {
   }, [gameState, botProfiles, isShuffling, isOnline, gameId]);
 
   const getCardDisplay = (card: Card) => {
-    const suitSymbols: Record<Suit, string> = { hearts: '♥', diamonds: '♦', clubs: '♣', spades: '♠' };
+    const suitSymbols: Record<Suit, string> = { hearts: 'â™¥', diamonds: 'â™¦', clubs: 'â™£', spades: 'â™ ' };
     const suitColors: Record<Suit, string> = { hearts: '#e74c3c', diamonds: '#e74c3c', clubs: '#1a1a2e', spades: '#1a1a2e' };
     return { symbol: suitSymbols[card.suit], color: suitColors[card.suit] };
   };
 
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // RENDER: SHUFFLING SCREEN
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (gameState && isShuffling) {
     return (
       <View style={styles.container}>
@@ -1814,7 +1833,7 @@ function AppContent() {
         <View style={styles.bg} />
         <View style={styles.lobbyContent}>
           <Animated.View style={[styles.card, styles.faceDownCard, { transform: [{ scale: shuffleAnim }], width: 120, height: 170 }]}>
-            <Text style={{ fontSize: 55, color: '#fff' }}>🂠</Text>
+            <Text style={{ fontSize: 55, color: '#fff' }}>ðŸ‚ </Text>
           </Animated.View>
           <Text style={[styles.gameTitle, { marginTop: 40, fontSize: 30 }]}>Shuffling Deck...</Text>
           <Text style={styles.lobbySubtext}>Dealing 4 cards to each player</Text>
@@ -1823,9 +1842,9 @@ function AppContent() {
     );
   }
 
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // RENDER: GAME SCREEN
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (gameState && !isShuffling) {
     const currentPlayer = getCurrentPlayer(gameState);
     const topCard = getTopCard(gameState);
@@ -1839,7 +1858,7 @@ function AppContent() {
 
         <View style={styles.gameHeader}>
           <TouchableOpacity onPress={handleExitGamePress} style={styles.iconButton}>
-            <Text style={styles.iconButtonText}>←</Text>
+            <Text style={styles.iconButtonText}>â†</Text>
           </TouchableOpacity>
           <Text style={styles.headerTitle}>CardFlow</Text>
           
@@ -1851,19 +1870,19 @@ function AppContent() {
                   setIsMicMuted(newState);
                   if (voiceRoomRef.current) voiceRoomRef.current.setMicMuted(newState);
                 }} style={styles.iconButton}>
-                  <Text style={styles.iconButtonText}>{isMicMuted ? '🔇' : '🎙️'}</Text>
+                  <Text style={styles.iconButtonText}>{isMicMuted ? 'ðŸ”‡' : 'ðŸŽ™ï¸'}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                   const newState = !isDeafened;
                   setIsDeafened(newState);
                   if (voiceRoomRef.current) voiceRoomRef.current.setDeafened(newState);
                 }} style={styles.iconButton}>
-                  <Text style={styles.iconButtonText}>{isDeafened ? '🔕' : '🎧'}</Text>
+                  <Text style={styles.iconButtonText}>{isDeafened ? 'ðŸ”•' : 'ðŸŽ§'}</Text>
                 </TouchableOpacity>
               </>
             )}
             <TouchableOpacity onPress={() => setShowHistoryModal(true)} style={styles.iconButton}>
-              <Text style={styles.iconButtonText}>👁️</Text>
+              <Text style={styles.iconButtonText}>ðŸ‘ï¸</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -1878,7 +1897,7 @@ function AppContent() {
           <View style={styles.floatingPlayButtonContainer}>
             <TouchableOpacity style={styles.floatingPlayButton} onPress={handlePlaySelected}>
               <Text style={styles.floatingPlayButtonText}>
-                ▶ PLAY ({selectedCardIds.length})
+                â–¶ PLAY ({selectedCardIds.length})
               </Text>
             </TouchableOpacity>
           </View>
@@ -1895,13 +1914,13 @@ function AppContent() {
                   <View style={styles.opponentAvatarFrame}>
                     <Text style={styles.opponentAvatarText}>{p.name.slice(0, 1).toUpperCase()}</Text>
                   </View>
-                  {isTheirTurn && <Text style={styles.turnDot}>▶</Text>}
+                  {isTheirTurn && <Text style={styles.turnDot}>â–¶</Text>}
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={styles.playerName}>{p.name}</Text>
                     {renderOnlineDot(p.id)}
                   </View>
                   <View style={styles.cardCountBadge}>
-                    <Text style={styles.cardCountText}>🃏 {p.hand.length}</Text>
+                    <Text style={styles.cardCountText}>ðŸƒ {p.hand.length}</Text>
                   </View>
                 </View>
               );
@@ -1912,26 +1931,26 @@ function AppContent() {
           <View style={styles.gameStatus}>
             {gameState.penaltyCounter > 0 && (
               <View style={styles.attackWarning}>
-                <Text style={styles.attackWarningText}>⚠️ ATTACK: Draw {gameState.penaltyCounter} or defend with 2/3/Ace</Text>
+                <Text style={styles.attackWarningText}>âš ï¸ ATTACK: Draw {gameState.penaltyCounter} or defend with 2/3/Ace</Text>
               </View>
             )}
             {gameState.isReshuffling && (
               <View style={styles.reshuffleNotice}>
-                <Text style={styles.reshuffleText}>🔄 Deck reshuffled!</Text>
+                <Text style={styles.reshuffleText}>ðŸ”„ Deck reshuffled!</Text>
               </View>
             )}
             {gameState.activeSuit && (
               <View style={styles.activeSuitNotice}>
                 <Text style={styles.activeSuitText}>
-                  Active Suit: {gameState.activeSuit === 'hearts' ? '♥' : gameState.activeSuit === 'diamonds' ? '♦' : gameState.activeSuit === 'clubs' ? '♣' : '♠'} {gameState.activeSuit.toUpperCase()}
+                  Active Suit: {gameState.activeSuit === 'hearts' ? 'â™¥' : gameState.activeSuit === 'diamonds' ? 'â™¦' : gameState.activeSuit === 'clubs' ? 'â™£' : 'â™ '} {gameState.activeSuit.toUpperCase()}
                 </Text>
               </View>
             )}
             <Text style={[styles.turnIndicator, isPlayerTurn && styles.myTurnIndicator]}>
-              {isPlayerTurn ? '✅ YOUR TURN' : `⏳ ${currentPlayer.name.toUpperCase()}'S TURN`}
+              {isPlayerTurn ? 'âœ… YOUR TURN' : `â³ ${currentPlayer.name.toUpperCase()}'S TURN`}
             </Text>
             {gameState.playDirection === -1 && (
-              <Text style={styles.directionBadge}>🔄 Reversed Direction</Text>
+              <Text style={styles.directionBadge}>ðŸ”„ Reversed Direction</Text>
             )}
           </View>
 
@@ -1951,7 +1970,7 @@ function AppContent() {
               <Text style={styles.pileLabel}>DRAW</Text>
               <TouchableOpacity onPress={handleDrawCard} disabled={!isPlayerTurn} activeOpacity={0.7}>
                 <View style={[styles.card, styles.faceDownCard, !isPlayerTurn && styles.disabledDraw]}>
-                  <Text style={{ fontSize: 50, color: 'rgba(255,255,255,0.9)' }}>🂠</Text>
+                  <Text style={{ fontSize: 50, color: 'rgba(255,255,255,0.9)' }}>ðŸ‚ </Text>
                 </View>
               </TouchableOpacity>
               <Text style={styles.drawCount}>{gameState.drawPile.length} left</Text>
@@ -1964,7 +1983,7 @@ function AppContent() {
               <View style={styles.myPlayerHeader}>
                 <Text style={styles.myPlayerName}>{me.name} (You)</Text>
                 <View style={styles.cardCountBadge}>
-                  <Text style={styles.cardCountText}>🃏 {me.hand.length}</Text>
+                  <Text style={styles.cardCountText}>ðŸƒ {me.hand.length}</Text>
                 </View>
               </View>
               
@@ -1981,13 +2000,13 @@ function AppContent() {
                         <Text style={[styles.buttonText, { fontSize: 14 }]}>Coach is thinking...</Text>
                       </View>
                     ) : (
-                      <Text style={[styles.buttonText, { fontSize: 14 }]}>🤖 Get Coach Hint</Text>
+                      <Text style={[styles.buttonText, { fontSize: 14 }]}>ðŸ¤– Get Coach Hint</Text>
                     )}
                   </TouchableOpacity>
                   
                   {coachHint && !isCoachThinking && (
                     <View style={{ marginTop: 10, padding: 12, backgroundColor: 'rgba(46, 204, 113, 0.2)', borderRadius: 8, borderWidth: 1, borderColor: 'rgba(46, 204, 113, 0.5)' }}>
-                      <Text style={{ color: '#2ecc71', fontWeight: 'bold', fontSize: 14 }}>💡 Coach says:</Text>
+                      <Text style={{ color: '#2ecc71', fontWeight: 'bold', fontSize: 14 }}>ðŸ’¡ Coach says:</Text>
                       <Text style={{ color: '#fff', fontSize: 14, marginTop: 4 }}>{coachHint.tipText}</Text>
                     </View>
                   )}
@@ -2024,7 +2043,7 @@ function AppContent() {
           {isGameOver(gameState) && (
             <View style={styles.modalOverlay}>
               <View style={styles.gameOverCard}>
-                <Text style={styles.gameOverTitle}>🏆 Game Over!</Text>
+                <Text style={styles.gameOverTitle}>ðŸ† Game Over!</Text>
                 {(() => {
                   const winner = gameState.players.find(player => player.id === gameState.winner);
                   const reward = getMatchReward(gameState.initialPlayerCount || gameState.players.length);
@@ -2054,7 +2073,7 @@ function AppContent() {
                   {(['hearts', 'diamonds', 'clubs', 'spades'] as Suit[]).map(suit => (
                     <TouchableOpacity key={suit} style={[styles.suitOption, styles[suit]]} onPress={() => handleSuitSelect(suit)}>
                       <Text style={styles.suitOptionText}>
-                        {suit === 'hearts' && '♥'}{suit === 'diamonds' && '♦'}{suit === 'clubs' && '♣'}{suit === 'spades' && '♠'}
+                        {suit === 'hearts' && 'â™¥'}{suit === 'diamonds' && 'â™¦'}{suit === 'clubs' && 'â™£'}{suit === 'spades' && 'â™ '}
                       </Text>
                       <Text style={{ color: '#fff', fontSize: 10, marginTop: 4 }}>{suit}</Text>
                     </TouchableOpacity>
@@ -2069,9 +2088,9 @@ function AppContent() {
             <View style={styles.modalOverlay}>
               <View style={styles.historyCard}>
                 <View style={styles.historyHeader}>
-                  <Text style={styles.modalTitle}>👁️ Card History</Text>
+                  <Text style={styles.modalTitle}>ðŸ‘ï¸ Card History</Text>
                   <TouchableOpacity onPress={() => setShowHistoryModal(false)}>
-                    <Text style={styles.closeIcon}>✕</Text>
+                    <Text style={styles.closeIcon}>âœ•</Text>
                   </TouchableOpacity>
                 </View>
                 {(() => {
@@ -2102,9 +2121,9 @@ function AppContent() {
     );
   }
 
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // RENDER: AUTH LOADING SPLASH
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (authLoading) {
     return (
       <View style={styles.container}>
@@ -2117,9 +2136,25 @@ function AppContent() {
     );
   }
 
-  // ─────────────────────────────────────────────
+  // â”€â”€ App Open Ad Splash Gate â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // While the cold-start App Open ad is loading/showing (appReady=false),
+  // render a branded splash that fully blocks the lobby so users cannot
+  // accidentally tap any game buttons. Once the ad closes (or 5s timeout fires)
+  // appReady becomes true and the real UI is shown.
+  if (!appReady) {
+    return (
+      <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+        <View style={styles.bg} />
+        <Text style={styles.gameTitle}>CardFlow</Text>
+        <Text style={[styles.gameSubtitle, { marginTop: 8, opacity: 0.7 }]}>Loadingâ€¦</Text>
+        <ActivityIndicator size="large" color="#a855f7" style={{ marginTop: 30 }} />
+      </View>
+    );
+  }
+
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // RENDER: AUTH SCREEN (Login / Signup)
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (!authUser) {
     return (
       <View style={styles.container}>
@@ -2131,7 +2166,7 @@ function AppContent() {
               {/* Logo */}
               <View style={styles.authLogoArea}>
                 <View style={styles.authLogoCircle}>
-                  <Text style={styles.authLogoText}>🃏</Text>
+                  <Text style={styles.authLogoText}>ðŸƒ</Text>
                 </View>
                 <Text style={styles.gameTitle}>CardFlow</Text>
                 <Text style={styles.gameSubtitle}>The Ultimate Card Battle</Text>
@@ -2152,20 +2187,20 @@ function AppContent() {
                 {/* Username (signup only) */}
                 {authScreen === 'signup' && (
                   <View style={styles.authFieldGroup}>
-                    <Text style={styles.authFieldLabel}>👤 Username</Text>
+                    <Text style={styles.authFieldLabel}>ðŸ‘¤ Username</Text>
                     <TextInput style={styles.authInput} placeholder="e.g. janesmith" placeholderTextColor="rgba(255,255,255,0.35)" value={authUsername} onChangeText={setAuthUsername} autoCapitalize="none" autoCorrect={false} />
                   </View>
                 )}
 
                 {/* Email */}
                 <View style={styles.authFieldGroup}>
-                  <Text style={styles.authFieldLabel}>✉️ Email Address</Text>
+                  <Text style={styles.authFieldLabel}>âœ‰ï¸ Email Address</Text>
                   <TextInput style={styles.authInput} placeholder="e.g. you@example.com" placeholderTextColor="rgba(255,255,255,0.35)" value={authEmail} onChangeText={setAuthEmail} keyboardType="email-address" autoCapitalize="none" />
                 </View>
 
                 {/* Password */}
                 <View style={styles.authFieldGroup}>
-                  <Text style={styles.authFieldLabel}>🔒 Password</Text>
+                  <Text style={styles.authFieldLabel}>ðŸ”’ Password</Text>
                   <View style={styles.passwordInputContainer}>
                     <TextInput style={[styles.authInput, { flex: 1, borderWidth: 0 }]} placeholder="Min 6 characters" placeholderTextColor="rgba(255,255,255,0.35)" value={authPassword} onChangeText={setAuthPassword} secureTextEntry={!showPassword} />
                     <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={{ padding: 10 }}>
@@ -2177,7 +2212,7 @@ function AppContent() {
                 {/* Confirm Password (signup only) */}
                 {authScreen === 'signup' && (
                   <View style={styles.authFieldGroup}>
-                    <Text style={styles.authFieldLabel}>🔒 Confirm Password</Text>
+                    <Text style={styles.authFieldLabel}>ðŸ”’ Confirm Password</Text>
                     <View style={styles.passwordInputContainer}>
                       <TextInput style={[styles.authInput, { flex: 1, borderWidth: 0 }]} placeholder="Re-enter password" placeholderTextColor="rgba(255,255,255,0.35)" value={authConfirmPassword} onChangeText={setAuthConfirmPassword} secureTextEntry={!showPassword} />
                       <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={{ padding: 10 }}>
@@ -2188,7 +2223,7 @@ function AppContent() {
                 )}
 
                 <TouchableOpacity style={styles.authActionButton} onPress={authScreen === 'login' ? handleLogin : handleSignup}>
-                  <Text style={styles.authActionButtonText}>{authScreen === 'login' ? 'Sign In →' : 'Create Account →'}</Text>
+                  <Text style={styles.authActionButtonText}>{authScreen === 'login' ? 'Sign In â†’' : 'Create Account â†’'}</Text>
                 </TouchableOpacity>
 
                 <Text style={styles.authNote}>
@@ -2206,27 +2241,33 @@ function AppContent() {
     );
   }
 
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // RENDER: LOBBY / WAITING SCREEN
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (isWaitingForOpponent) {
     const maxLobbyPlayers = 4;
     return (
       <View style={styles.container}>
         <StatusBar style="light" />
         <View style={styles.bg} />
-        <ScrollView style={styles.lobbyScroll} contentContainerStyle={styles.lobbyContent} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={styles.lobbyScroll}
+          contentContainerStyle={styles.lobbyContent}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          nestedScrollEnabled={true}
+        >
           <View style={styles.glassCard}>
             {isMatchmaking ? (
               <>
-                <Text style={styles.lobbyTitle}>🔍 Finding a Match...</Text>
+                <Text style={styles.lobbyTitle}>ðŸ” Finding a Match...</Text>
                 <ActivityIndicator size="large" color="#8a2bbe" style={{ marginVertical: 30 }} />
                 <Text style={styles.waitingText}>Connecting you to the best available opponent...</Text>
                 <Text style={[styles.waitingText, { marginTop: 10, opacity: 0.6, fontSize: 12 }]}>If no one is found, you'll be matched with a player shortly.</Text>
               </>
             ) : (
               <>
-                <Text style={styles.lobbyTitle}>🎮 Room Created!</Text>
+                <Text style={styles.lobbyTitle}>ðŸŽ® Room Created!</Text>
                 <Text style={styles.lobbySubtext}>Share this code with your friends:</Text>
                 <View style={styles.roomCodeContainer}>
                   <Text style={styles.roomCodeText}>{roomCode}</Text>
@@ -2253,25 +2294,25 @@ function AppContent() {
                   )}
                 </View>
                 <TouchableOpacity style={[styles.glassButton, styles.createButton, { marginTop: 20 }]} onPress={handleHostStartGame}>
-                  <Text style={styles.buttonText}>▶ Start Game</Text>
+                  <Text style={styles.buttonText}>â–¶ Start Game</Text>
                   <Text style={styles.buttonSubtext}>Start with whoever has joined (min 2)</Text>
                 </TouchableOpacity>
               </>
             )}
           </View>
           <TouchableOpacity style={[styles.glassButton, { backgroundColor: 'rgba(200,0,0,0.3)', borderColor: 'rgba(255,0,0,0.4)', marginTop: 16, paddingHorizontal: 40 }]} onPress={handleLeaveLobby}>
-            <Text style={styles.buttonText}>❌ Leave</Text>
+            <Text style={styles.buttonText}>âŒ Leave</Text>
           </TouchableOpacity>
 
           <Text style={styles.poweredByText}>Powered by ESIR</Text>
 
-          {/* ── Banner Ad — below Powered by ESIR (AdMob policy compliant) ── */}
+          {/* â”€â”€ Banner Ad â€” below Powered by ESIR (AdMob policy compliant) â”€â”€ */}
           {adsSupportedNative && BannerAd ? (
-            <View style={{ alignItems: 'center', marginTop: 14, marginBottom: 12 }}>
+            <View style={{ alignItems: 'center', marginTop: 30, marginBottom: 12 }}>
               <Text style={{ color: 'rgba(255,255,255,0.25)', fontSize: 10, letterSpacing: 1, marginBottom: 6 }}>ADVERTISEMENT</Text>
               <BannerAd
                 unitId={AD_UNIT_IDS.banner}
-                size={BannerAdSize.ADAPTIVE_BANNER}
+                size={BannerAdSize.MEDIUM_RECTANGLE ?? 'MEDIUM_RECTANGLE'}
                 requestOptions={{ requestNonPersonalizedAdsOnly: false }}
                 onAdFailedToLoad={(err: any) => console.warn('[Banner] Load error:', err)}
               />
@@ -2284,9 +2325,9 @@ function AppContent() {
     );
   }
 
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // RENDER: MAIN MENU
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -2295,14 +2336,14 @@ function AppContent() {
       {/* TOP HEADER */}
       <View style={styles.topHeader}>
         <View style={styles.balanceBadge}>
-          <Text style={styles.balanceIcon}>💰</Text>
+          <Text style={styles.balanceIcon}>ðŸ’°</Text>
           <Text style={styles.balanceText}>{Number(userProfile.balance).toFixed(2)}</Text>
         </View>
         <Text style={styles.headerTitle}>CardFlow</Text>
         <View style={styles.headerSpacer} />
       </View>
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.keyboardView}>
           <View style={[styles.titleContainer, { marginTop: 10 }]}>
             <Text style={[styles.gameSubtitle, { marginTop: 0 }]}>Fluid Multiplayer Card Game</Text>
@@ -2322,7 +2363,7 @@ function AppContent() {
             />
           </View>
 
-          {/* ── Tournament Hero Cards ─────────────────────────────── */}
+          {/* â”€â”€ Tournament Hero Cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <TouchableOpacity
             onPress={openTournament}
             style={{
@@ -2337,7 +2378,7 @@ function AppContent() {
           >
             {/* Header row */}
             <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingTop: 14, paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: 'rgba(241,196,15,0.15)' }}>
-              <Text style={{ fontSize: 22 }}>🏆</Text>
+              <Text style={{ fontSize: 22 }}>ðŸ†</Text>
               <Text style={{ flex: 1, color: '#f1c40f', fontSize: 18, fontWeight: '900', letterSpacing: 1.5, marginLeft: 10 }}>TOURNAMENTS</Text>
               <Text style={{ color: 'rgba(241,196,15,0.7)', fontSize: 12, fontWeight: '600' }}>TAP TO VIEW</Text>
             </View>
@@ -2345,11 +2386,11 @@ function AppContent() {
             {/* Weekly card */}
             <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.06)' }}>
               <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: 'rgba(241,196,15,0.15)', alignItems: 'center', justifyContent: 'center', marginRight: 12 }}>
-                <Text style={{ fontSize: 20 }}>{tournamentDashboard.is_open ? '🔓' : '🔒'}</Text>
+                <Text style={{ fontSize: 20 }}>{tournamentDashboard.is_open ? 'ðŸ”“' : 'ðŸ”’'}</Text>
               </View>
               <View style={{ flex: 1 }}>
                 <Text style={{ color: '#fff', fontWeight: '800', fontSize: 15 }}>Weekly Tournament</Text>
-                <Text style={{ color: 'rgba(255,255,255,0.55)', fontSize: 12, marginTop: 2 }}>Every Sunday · Top players win</Text>
+                <Text style={{ color: 'rgba(255,255,255,0.55)', fontSize: 12, marginTop: 2 }}>Every Sunday Â· Top players win</Text>
               </View>
               <View style={{ alignItems: 'flex-end' }}>
                 <Text style={{ color: '#f1c40f', fontWeight: '900', fontSize: 17 }}>10,000</Text>
@@ -2360,11 +2401,11 @@ function AppContent() {
             {/* Monthly card */}
             <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 12 }}>
               <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: 'rgba(138,43,226,0.2)', alignItems: 'center', justifyContent: 'center', marginRight: 12 }}>
-                <Text style={{ fontSize: 20 }}>🔒</Text>
+                <Text style={{ fontSize: 20 }}>ðŸ”’</Text>
               </View>
               <View style={{ flex: 1 }}>
                 <Text style={{ color: '#fff', fontWeight: '800', fontSize: 15 }}>Monthly Grand Prix</Text>
-                <Text style={{ color: 'rgba(255,255,255,0.55)', fontSize: 12, marginTop: 2 }}>Last day of month · Champions only</Text>
+                <Text style={{ color: 'rgba(255,255,255,0.55)', fontSize: 12, marginTop: 2 }}>Last day of month Â· Champions only</Text>
               </View>
               <View style={{ alignItems: 'flex-end' }}>
                 <Text style={{ color: '#c084fc', fontWeight: '900', fontSize: 17 }}>35,000</Text>
@@ -2377,35 +2418,35 @@ function AppContent() {
             style={[styles.glassButton, { backgroundColor: 'rgba(156, 39, 176, 0.15)', borderColor: '#9c27b0', borderWidth: 2, marginBottom: 20 }]} 
             onPress={() => setShowChallengeModal(true)}
           >
-            <Text style={[styles.buttonText, { color: '#e040fb', fontSize: 18, textAlign: 'center' }]}>⚔️ CHALLENGE PLAYERS</Text>
+            <Text style={[styles.buttonText, { color: '#e040fb', fontSize: 18, textAlign: 'center' }]}>âš”ï¸ CHALLENGE PLAYERS</Text>
             <Text style={[styles.buttonSubtext, { textAlign: 'center', color: '#fff' }]}>
-              {incomingRequests.length > 0 ? `🔥 You have ${incomingRequests.length} pending challenge(s)` : 'Search & invite online players'}
+              {incomingRequests.length > 0 ? `ðŸ”¥ You have ${incomingRequests.length} pending challenge(s)` : 'Search & invite online players'}
             </Text>
           </TouchableOpacity>
 
           <View style={styles.gridContainer}>
             <TouchableOpacity style={[styles.gridButton, styles.randomButton]} onPress={handleFindRandom}>
-              <Text style={styles.buttonText}>🎲 Random</Text>
+              <Text style={styles.buttonText}>ðŸŽ² Random</Text>
               <Text style={styles.gridSubtext}>Global Match</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={[styles.gridButton, styles.createButton]} onPress={handleCreateRoom}>
-              <Text style={styles.buttonText}>🎮 Create</Text>
+              <Text style={styles.buttonText}>ðŸŽ® Create</Text>
               <Text style={styles.gridSubtext}>Host Private</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={[styles.gridButton, styles.joinButton]} onPress={() => setShowJoinModal(true)}>
-              <Text style={styles.buttonText}>🔗 Join</Text>
+              <Text style={styles.buttonText}>ðŸ”— Join</Text>
               <Text style={styles.gridSubtext}>Use Code</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={[styles.gridButton, styles.botButton]} onPress={handlePlayVsBot}>
-              <Text style={styles.buttonText}>🤖 Bots</Text>
+              <Text style={styles.buttonText}>ðŸ¤– Bots</Text>
               <Text style={styles.gridSubtext}>Offline Play</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={[styles.gridButton, styles.rulesButton]} onPress={() => setShowRulesModal(true)}>
-              <Text style={styles.buttonText}>📖 Rules</Text>
+              <Text style={styles.buttonText}>ðŸ“– Rules</Text>
               <Text style={styles.gridSubtext}>How to play</Text>
             </TouchableOpacity>
 
@@ -2413,26 +2454,26 @@ function AppContent() {
               style={[styles.gridButton, { backgroundColor: 'rgba(241,196,15,0.14)', borderColor: 'rgba(241,196,15,0.5)' }]}
               onPress={openTournament}
             >
-              <Text style={styles.buttonText}>{tournamentDashboard.is_open ? '🔓' : '🔒'}</Text>
+              <Text style={styles.buttonText}>{tournamentDashboard.is_open ? 'ðŸ”“' : 'ðŸ”’'}</Text>
               <Text style={[styles.gridSubtext, { color: '#f1c40f', fontWeight: '700' }]}>Tournament</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={[styles.gridButton, { backgroundColor: 'rgba(233, 30, 99, 0.25)', borderColor: 'rgba(233, 30, 99, 0.5)' }]} onPress={() => setShowProfileModal(true)}>
-              <Text style={styles.buttonText}>👤 Profile</Text>
+              <Text style={styles.buttonText}>ðŸ‘¤ Profile</Text>
               <Text style={styles.gridSubtext}>Stats & Cash</Text>
             </TouchableOpacity>
           </View>
 
           <TouchableOpacity style={[styles.glassButton, { backgroundColor: 'rgba(255, 193, 7, 0.25)', borderColor: 'rgba(255, 193, 7, 0.5)', marginTop: 16 }]} onPress={() => Linking.openURL('mailto:texasrush547@gmail.com?subject=CardFlow%20Support')}>
-            <Text style={styles.buttonText}>✉️ Contact Support</Text>
+            <Text style={styles.buttonText}>âœ‰ï¸ Contact Support</Text>
             <Text style={styles.buttonSubtext}>Email us at texasrush547@gmail.com</Text>
           </TouchableOpacity>
 
-          {/* ── Tournament Modal ───────────────────────────────────── */}
+          {/* â”€â”€ Tournament Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           {showTournamentModal && (
             <View style={styles.modalOverlay}>
               <View style={[styles.modalCard, { maxHeight: '90%' }]}>
-                <Text style={styles.modalTitle}>🏆 Tournaments</Text>
+                <Text style={styles.modalTitle}>ðŸ† Tournaments</Text>
 
                 <ScrollView style={{ flexGrow: 0, maxHeight: 480 }} showsVerticalScrollIndicator={false} nestedScrollEnabled>
 
@@ -2445,7 +2486,7 @@ function AppContent() {
                       borderColor: tournamentDashboard.is_open ? '#4ade80' : 'rgba(255,100,100,0.4)',
                     }}>
                       <Text style={{ color: tournamentDashboard.is_open ? '#4ade80' : '#ff7777', fontWeight: '800', fontSize: 13, letterSpacing: 1 }}>
-                        {tournamentDashboard.is_open ? '🔓 REGISTRATION OPEN' : '🔒 REGISTRATION CLOSED'}
+                        {tournamentDashboard.is_open ? 'ðŸ”“ REGISTRATION OPEN' : 'ðŸ”’ REGISTRATION CLOSED'}
                       </Text>
                     </View>
                   </View>
@@ -2457,7 +2498,7 @@ function AppContent() {
                     backgroundColor: 'rgba(241,196,15,0.06)',
                   }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', padding: 14, borderBottomWidth: 1, borderBottomColor: 'rgba(241,196,15,0.12)' }}>
-                      <Text style={{ fontSize: 28, marginRight: 12 }}>{tournamentDashboard.is_open ? '🔓' : '🔒'}</Text>
+                      <Text style={{ fontSize: 28, marginRight: 12 }}>{tournamentDashboard.is_open ? 'ðŸ”“' : 'ðŸ”’'}</Text>
                       <View style={{ flex: 1 }}>
                         <Text style={{ color: '#f1c40f', fontWeight: '900', fontSize: 16, letterSpacing: 0.5 }}>Weekly Tournament</Text>
                         <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12, marginTop: 2 }}>Resets every Sunday midnight</Text>
@@ -2482,7 +2523,7 @@ function AppContent() {
                     backgroundColor: 'rgba(138,43,226,0.06)',
                   }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', padding: 14, borderBottomWidth: 1, borderBottomColor: 'rgba(192,132,252,0.12)' }}>
-                      <Text style={{ fontSize: 28, marginRight: 12 }}>🔒</Text>
+                      <Text style={{ fontSize: 28, marginRight: 12 }}>ðŸ”’</Text>
                       <View style={{ flex: 1 }}>
                         <Text style={{ color: '#c084fc', fontWeight: '900', fontSize: 16, letterSpacing: 0.5 }}>Monthly Grand Prix</Text>
                         <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12, marginTop: 2 }}>Last Sunday of every month</Text>
@@ -2510,11 +2551,11 @@ function AppContent() {
                   {/* Leaderboard */}
                   {tournamentDashboard.leaderboard?.length > 0 && (
                     <View style={{ marginBottom: 16 }}>
-                      <Text style={[styles.label, { marginBottom: 8 }]}>🥇 Leaderboard</Text>
+                      <Text style={[styles.label, { marginBottom: 8 }]}>ðŸ¥‡ Leaderboard</Text>
                       {tournamentDashboard.leaderboard.slice(0, 5).map((entry: any, idx: number) => (
                         <View key={idx} style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 8, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.06)' }}>
                           <Text style={{ width: 28, color: idx === 0 ? '#f1c40f' : idx === 1 ? '#c0c0c0' : idx === 2 ? '#cd7f32' : 'rgba(255,255,255,0.5)', fontWeight: '800', fontSize: 15 }}>
-                            {idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx + 1}`}
+                            {idx === 0 ? 'ðŸ¥‡' : idx === 1 ? 'ðŸ¥ˆ' : idx === 2 ? 'ðŸ¥‰' : `#${idx + 1}`}
                           </Text>
                           <Text style={{ flex: 1, color: '#fff', fontWeight: '600' }}>{entry.display_name || entry.username || 'Player'}</Text>
                           <Text style={{ color: '#f1c40f', fontWeight: '800' }}>{entry.points} pts</Text>
@@ -2534,7 +2575,7 @@ function AppContent() {
                     disabled={tournamentDashboard.key_count > 0}
                   >
                     <Text style={[styles.modalButtonText, { color: '#f1c40f' }]}>
-                      {tournamentDashboard.key_count > 0 ? '✅ Key Purchased' : '🗝️ Buy Tournament Key'}
+                      {tournamentDashboard.key_count > 0 ? 'âœ… Key Purchased' : 'ðŸ—ï¸ Buy Tournament Key'}
                     </Text>
                   </TouchableOpacity>
 
@@ -2550,24 +2591,24 @@ function AppContent() {
                     <Text style={[styles.modalButtonText, {
                       color: tournamentDashboard.is_open && tournamentDashboard.key_count > 0 ? '#4ade80' : 'rgba(255,255,255,0.4)',
                     }]}>
-                      {!tournamentDashboard.is_open ? '🔒 Tournament Not Open' : tournamentDashboard.key_count === 0 ? '🗝️ Need a Key to Enter' : '▶ Enter Tournament'}
+                      {!tournamentDashboard.is_open ? 'ðŸ”’ Tournament Not Open' : tournamentDashboard.key_count === 0 ? 'ðŸ—ï¸ Need a Key to Enter' : 'â–¶ Enter Tournament'}
                     </Text>
                   </TouchableOpacity>
 
                   {/* Admin controls */}
                   {tournamentDashboard.is_admin && (
                     <View style={{ marginTop: 8, padding: 12, backgroundColor: 'rgba(255,255,255,0.04)', borderRadius: 12, borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)' }}>
-                      <Text style={[styles.label, { color: '#ff9800', marginBottom: 10 }]}>⚙️ Admin Controls</Text>
+                      <Text style={[styles.label, { color: '#ff9800', marginBottom: 10 }]}>âš™ï¸ Admin Controls</Text>
                       <TouchableOpacity style={[styles.modalButton, { backgroundColor: tournamentDashboard.is_open ? 'rgba(255,100,100,0.2)' : 'rgba(74,222,128,0.2)', marginBottom: 0 }]} onPress={() => setTournamentOpen(!tournamentDashboard.is_open)}>
                         <Text style={[styles.modalButtonText, { color: tournamentDashboard.is_open ? '#ff7777' : '#4ade80' }]}>
-                          {tournamentDashboard.is_open ? '🔒 Close Registration' : '🔓 Open Registration'}
+                          {tournamentDashboard.is_open ? 'ðŸ”’ Close Registration' : 'ðŸ”“ Open Registration'}
                         </Text>
                       </TouchableOpacity>
                     </View>
                   )}
                 </ScrollView>
 
-                <TouchableOpacity style={[styles.modalButton, styles.cancelButton, { marginTop: 14 }]} onPress={() => setShowTournamentModal(false)}>
+                <TouchableOpacity style={[styles.modalButton, styles.cancelButton, { marginTop: 30 }]} onPress={() => setShowTournamentModal(false)}>
                   <Text style={styles.modalButtonText}>Close</Text>
                 </TouchableOpacity>
               </View>
@@ -2578,7 +2619,7 @@ function AppContent() {
           {showProfileModal && (
             <View style={styles.modalOverlay}>
                 <View style={[styles.modalCard, styles.profileModalCard]}>
-                <Text style={styles.modalTitle}>👤 My Profile</Text>
+                <Text style={styles.modalTitle}>ðŸ‘¤ My Profile</Text>
 
                 <ScrollView style={styles.profileScroll} contentContainerStyle={styles.profileScrollContent} nestedScrollEnabled keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator>
                   {/* Rich Profile Card */}
@@ -2624,12 +2665,12 @@ function AppContent() {
                         saveProfile({ ...userProfile, avatarId: `${style}:${randomSeed}` });
                       }}
                     >
-                      <Text style={{ color: '#fff', fontSize: 16 }}>🎲 Randomize</Text>
+                      <Text style={{ color: '#fff', fontSize: 16 }}>ðŸŽ² Randomize</Text>
                     </TouchableOpacity>
                   </View>
 
                   {/* Display Name */}
-                  <Text style={[styles.label, { marginTop: 14 }]}>Display Name</Text>
+                  <Text style={[styles.label, { marginTop: 30 }]}>Display Name</Text>
                   <TextInput
                     style={[styles.input, { marginBottom: 14, fontSize: 16, letterSpacing: 1 }]}
                     value={playerName}
@@ -2658,7 +2699,7 @@ function AppContent() {
                         <View style={styles.profileStatRow}>
                           <Text style={styles.profileStatLabel}>Win Rate</Text>
                           <Text style={styles.profileStatValue}>
-                            {userProfile.wins + userProfile.losses === 0 ? '—' : `${Math.round((userProfile.wins / (userProfile.wins + userProfile.losses)) * 100)}%`}
+                            {userProfile.wins + userProfile.losses === 0 ? 'â€”' : `${Math.round((userProfile.wins / (userProfile.wins + userProfile.losses)) * 100)}%`}
                           </Text>
                         </View>
                         {/* ELO Progress Bar */}
@@ -2677,7 +2718,7 @@ function AppContent() {
                   {false && <View style={{ marginTop: 24, padding: 16, backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: 16 }}>
                     {/* Wallet header */}
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-                      <Text style={[styles.label, { color: '#f1c40f' }]}>💰 Wallet</Text>
+                      <Text style={[styles.label, { color: '#f1c40f' }]}>ðŸ’° Wallet</Text>
                       <Text style={{ color: '#f1c40f', fontWeight: 'bold', fontSize: 16 }}>KES {userProfile.balance.toFixed(2)}</Text>
                     </View>
 
@@ -2720,7 +2761,7 @@ function AppContent() {
                     />
 
                     <TouchableOpacity
-                      style={[styles.modalButton, { backgroundColor: '#f1c40f', marginTop: 14 }]}
+                      style={[styles.modalButton, { backgroundColor: '#f1c40f', marginTop: 30 }]}
                       onPress={async () => {
                         const amt = parseFloat(withdrawAmount);
                         const phone = withdrawNumber.trim();
@@ -2797,9 +2838,9 @@ function AppContent() {
                       admobService.showRewardedAd(
                         async (rewardAmount) => {
                           try {
-                            // Each rewarded ad grants 50 coins (reward.amount from AdMob)
-                            // User must watch 2 ads to get 100 coins total.
-                            const coinsEarned = rewardAmount || 50;
+                            // Each rewarded ad grants 100 coins
+                            // User can watch 2 ads to get 200 coins total.
+                            const coinsEarned = 100;
                             const newWatchCount = adsWatchedForReward + 1;
                             setAdsWatchedForReward(newWatchCount);
 
@@ -2818,9 +2859,9 @@ function AppContent() {
 
                             if (newWatchCount >= 2) {
                               setAdsWatchedForReward(0);
-                              showAlert('🎉 Reward Complete!', `You watched 2 ads and earned 100 coins!`, 'info');
+                              showAlert('ðŸŽ‰ Reward Complete!', `You watched 2 ads and earned 200 coins!`, 'info');
                             } else {
-                              showAlert('Ad Complete!', `+${coinsEarned} coins! Watch 1 more ad to complete your 100-coin reward.`, 'info');
+                              showAlert('Ad Complete!', `+${coinsEarned} coins! Watch 1 more ad to complete your 200-coin reward.`, 'info');
                             }
                           } catch (e: any) {
                             console.error('Failed to reward user:', e);
@@ -2839,7 +2880,7 @@ function AppContent() {
                     }}
                   >
                     <Text style={[styles.buttonText, { color: '#4ade80', fontSize: 16, textAlign: 'center' }]}>
-                      📺 Watch Ad for Coins ({adsWatchedForReward}/2 → +100)
+                      ðŸ“º Watch Ad for Coins ({adsWatchedForReward}/2 â†’ = +100 each)
                     </Text>
                   </TouchableOpacity>
                 </ScrollView>
@@ -2862,7 +2903,7 @@ function AppContent() {
               <View style={[styles.modalCard, { maxHeight: '92%' }]}>
                 {/* Header */}
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-                  <Text style={[styles.modalTitle, { marginBottom: 0 }]}>💳 Deposit via M-Pesa</Text>
+                  <Text style={[styles.modalTitle, { marginBottom: 0 }]}>ðŸ’³ Deposit via M-Pesa</Text>
                   <TouchableOpacity onPress={() => {
                     setShowDepositWebView(false);
                     setDepositStatus('idle');
@@ -2874,9 +2915,9 @@ function AppContent() {
                 </View>
 
                 {depositStatus === 'sent' ? (
-                  // ── Success View ──────────────────────────────────────
+                  // â”€â”€ Success View â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                   <View style={{ alignItems: 'center', paddingVertical: 24 }}>
-                    <Text style={{ fontSize: 48, marginBottom: 12 }}>📲</Text>
+                    <Text style={{ fontSize: 48, marginBottom: 12 }}>ðŸ“²</Text>
                     <Text style={{ color: '#4ade80', fontSize: 18, fontWeight: 'bold', marginBottom: 8, textAlign: 'center' }}>STK Push Sent!</Text>
                     <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 14, textAlign: 'center', lineHeight: 22 }}>
                       {depositSuccessMessage || 'Check your phone for the M-Pesa prompt and enter your PIN to complete the deposit. Your balance will update automatically once payment is confirmed.'}
@@ -2897,10 +2938,10 @@ function AppContent() {
                     </TouchableOpacity>
                   </View>
                 ) : (
-                  // ── Input Form ───────────────────────────────────────
+                  // â”€â”€ Input Form â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                   <ScrollView showsVerticalScrollIndicator={false}>
                     {/* Amount */}
-                    <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 12, marginBottom: 6 }}>Amount (KES) — min 35, max 1500</Text>
+                    <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 12, marginBottom: 6 }}>Amount (KES) â€” min 35, max 1500</Text>
                     <TextInput
                       style={styles.input}
                       placeholder="e.g. 100"
@@ -2926,14 +2967,14 @@ function AppContent() {
                       <Text style={{ color: '#f87171', fontSize: 13, marginTop: 8 }}>{depositError}</Text>
                     )}
 
-                    {/* Bet Responsibly T&C */}
+                    {/* Fair Play & Community Guidelines */}
                     <View style={{ backgroundColor: 'rgba(255,193,7,0.08)', borderRadius: 12, padding: 14, marginTop: 16, borderWidth: 1, borderColor: 'rgba(255,193,7,0.25)' }}>
-                      <Text style={{ color: '#f1c40f', fontSize: 13, fontWeight: 'bold', marginBottom: 6 }}>⚠️ Bet Responsibly</Text>
+                      <Text style={{ color: '#f1c40f', fontSize: 13, fontWeight: 'bold', marginBottom: 6 }}>âš–ï¸ Fair Play & Community Guidelines</Text>
                       <Text style={{ color: 'rgba(255,255,255,0.65)', fontSize: 12, lineHeight: 18 }}>
-                        Gambling is for entertainment. Only deposit what you can afford to lose. Deposits are final once
-                        confirmed by M-Pesa. You cannot forfeit or abandon an ongoing paid game to avoid the result,
-                        stake, penalty, or platform rules. Play responsibly, take breaks, and seek help if gambling
-                        affects your wellbeing. By depositing you confirm you are 18+ and agree to GHURT's{' '}
+                        CardFlow is a skill-based entertainment game. Virtual game coins are used for match entry pools
+                        and leaderboard ranking only. Game coins have no real-world monetary value. Deposits are
+                        processed to purchase game coins. Coins cannot be forfeited by abandoning an ongoing match.
+                        By depositing you confirm you are 18+ and agree to CardFlow's{' '}
                         <Text style={{ color: '#f1c40f', textDecorationLine: 'underline' }}>Terms & Conditions</Text>.
                       </Text>
                       <TouchableOpacity
@@ -2947,10 +2988,10 @@ function AppContent() {
                           backgroundColor: depositTermsAgreed ? 'rgba(74,222,128,0.2)' : 'transparent',
                           alignItems: 'center', justifyContent: 'center', marginRight: 10,
                         }}>
-                          {depositTermsAgreed && <Text style={{ color: '#4ade80', fontSize: 14, fontWeight: 'bold' }}>✓</Text>}
+                          {depositTermsAgreed && <Text style={{ color: '#4ade80', fontSize: 14, fontWeight: 'bold' }}>âœ“</Text>}
                         </View>
                         <Text style={{ color: 'rgba(255,255,255,0.8)', fontSize: 12, flex: 1 }}>
-                          I am 18+, I agree to the Terms & Conditions and I am gambling responsibly.
+                          I am 18+ and I agree to the Terms & Conditions and Community Guidelines.
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -3078,13 +3119,13 @@ function AppContent() {
                   </TouchableOpacity>
                 </View>
 
-                {/* Banner ad inside Join modal — non-intrusive, below action buttons */}
+                {/* Banner ad inside Join modal â€” non-intrusive, below action buttons */}
                 {adsSupportedNative && BannerAd ? (
-                  <View style={{ alignItems: 'center', marginTop: 14 }}>
+                  <View style={{ alignItems: 'center', marginTop: 30 }}>
                     <Text style={{ color: 'rgba(255,255,255,0.25)', fontSize: 10, letterSpacing: 1, marginBottom: 4 }}>ADVERTISEMENT</Text>
                     <BannerAd
                       unitId={AD_UNIT_IDS.banner}
-                      size={BannerAdSize.ADAPTIVE_BANNER}
+                      size={BannerAdSize.MEDIUM_RECTANGLE ?? 'MEDIUM_RECTANGLE'}
                       requestOptions={{ requestNonPersonalizedAdsOnly: false }}
                       onAdFailedToLoad={(err: any) => console.warn('[Banner/Join] Load error:', err)}
                     />
@@ -3098,35 +3139,35 @@ function AppContent() {
           {showRulesModal && (
             <View style={styles.modalOverlay}>
               <View style={styles.modalCard}>
-                <Text style={styles.modalTitle}>📖 CardFlow Rules</Text>
+                <Text style={styles.modalTitle}>ðŸ“– CardFlow Rules</Text>
                 <ScrollView style={styles.rulesScroll} contentContainerStyle={{ paddingBottom: 18 }} showsVerticalScrollIndicator>
 
                   <Text style={styles.rulesHeader}>Quick guide</Text>
                   <Text style={styles.rulesText}>When the turn banner shows your name, tap the card or cards you want to use, then tap Play. Selected cards have a purple outline. You normally match either the suit or the number/rank of the top discard. If you have no valid move, tap the Draw Pile.</Text>
                   <Text style={styles.rulesText}>Example: on a 7 of Hearts, you may play any Heart or any 7. You may play several cards together only when they share the same rank, such as two 7s. A 7 and a 9 cannot be played together.</Text>
 
-                  <Text style={styles.rulesHeader}>🎯 Objective</Text>
-                  <Text style={styles.rulesText}>Be the first player to empty your hand. The last card you play CANNOT be a Power Card — this is the Forbidden Finish rule.</Text>
+                  <Text style={styles.rulesHeader}>ðŸŽ¯ Objective</Text>
+                  <Text style={styles.rulesText}>Be the first player to empty your hand. The last card you play CANNOT be a Power Card â€” this is the Forbidden Finish rule.</Text>
 
-                  <Text style={styles.rulesHeader}>🃏 Setup</Text>
+                  <Text style={styles.rulesHeader}>ðŸƒ Setup</Text>
                   <Text style={styles.rulesText}>Each player is dealt 4 cards from a standard 52-card deck. One card is placed face-up to start the discard pile. The remaining cards form the draw pile.</Text>
 
-                  <Text style={styles.rulesHeader}>🔄 Taking a Turn</Text>
+                  <Text style={styles.rulesHeader}>ðŸ”„ Taking a Turn</Text>
                   <Text style={styles.rulesText}>On your turn, you must play a card that matches the SUIT or RANK of the top card. You can play MULTIPLE cards of the same rank (e.g., three 7s) together by selecting them all and pressing Play.</Text>
                   <Text style={styles.rulesText}>If you cannot play, tap the Draw Pile. If the drawn card matches, you can play it immediately. Otherwise, your turn ends.</Text>
 
-                  <Text style={styles.rulesHeader}>⚔️ Attack Cards (2 & 3)</Text>
+                  <Text style={styles.rulesHeader}>âš”ï¸ Attack Cards (2 & 3)</Text>
                   <Text style={styles.rulesText}>Playing a 2 forces the next player to draw 2 cards. Playing a 3 forces them to draw 3 cards. The victim can defend by playing their own 2, 3, or Ace, passing the accumulated penalty to the next player!</Text>
 
-                  <Text style={styles.rulesHeader}>🛡️ The Ace (Wild)</Text>
+                  <Text style={styles.rulesHeader}>ðŸ›¡ï¸ The Ace (Wild)</Text>
                   <Text style={styles.rulesText}>An Ace can be played on ANY card at ANY time, even to defend against an attack. When played, the player chooses the new active suit.</Text>
 
-                  <Text style={styles.rulesHeader}>⚡ Power Cards (8, J, Q, K)</Text>
-                  <Text style={styles.rulesText}>• 8 & Queen: Grants you an immediate extra turn (Double-Tap).</Text>
-                  <Text style={styles.rulesText}>• Jack: Skips the next player's turn entirely.</Text>
-                  <Text style={styles.rulesText}>• King: Reverses the direction of play. (Acts as a Skip in 2-player games).</Text>
+                  <Text style={styles.rulesHeader}>âš¡ Power Cards (8, J, Q, K)</Text>
+                  <Text style={styles.rulesText}>â€¢ 8 & Queen: Grants you an immediate extra turn (Double-Tap).</Text>
+                  <Text style={styles.rulesText}>â€¢ Jack: Skips the next player's turn entirely.</Text>
+                  <Text style={styles.rulesText}>â€¢ King: Reverses the direction of play. (Acts as a Skip in 2-player games).</Text>
 
-                  <Text style={styles.rulesHeader}>🚫 Forbidden Finish</Text>
+                  <Text style={styles.rulesHeader}>ðŸš« Forbidden Finish</Text>
                   <Text style={styles.rulesText}>You cannot win by playing a Power Card (Ace, 2, 3, 8, J, Q, K) as your final card. If you do, you must draw a penalty card and keep playing. Only standard cards (4, 5, 6, 7, 9, 10) can win the game.</Text>
 
                   <Text style={styles.rulesHeader}>Helpful tips</Text>
@@ -3134,7 +3175,7 @@ function AppContent() {
                   <Text style={styles.rulesText}>After a King, follow the direction banner. In a two-player match a King effectively skips your opponent. If the draw pile runs out, the game reshuffles played cards automatically and continues.</Text>
                 </ScrollView>
                 <TouchableOpacity style={[styles.modalButton, styles.confirmButton, { marginTop: 16 }]} onPress={() => setShowRulesModal(false)}>
-                  <Text style={styles.modalButtonText}>Got it! Let's Play 🎮</Text>
+                  <Text style={styles.modalButtonText}>Got it! Let's Play ðŸŽ®</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -3145,7 +3186,7 @@ function AppContent() {
             <View style={styles.modalOverlay}>
               <View style={[styles.modalCard, { maxHeight: '90%', width: '90%' }]}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-                  <Text style={styles.modalTitle}>⚔️ Challenge Players</Text>
+                  <Text style={styles.modalTitle}>âš”ï¸ Challenge Players</Text>
                   <TouchableOpacity onPress={() => setShowChallengeModal(false)}>
                     <Ionicons name="close" size={28} color="#fff" />
                   </TouchableOpacity>
@@ -3177,13 +3218,23 @@ function AppContent() {
                         placeholder="Enter username (e.g. janesmith)"
                         placeholderTextColor="rgba(255,255,255,0.4)"
                         value={searchUsername}
-                        onChangeText={setSearchUsername}
+                        onChangeText={(text) => {
+                          setSearchUsername(text);
+                          if (searchDebounceRef.current) clearTimeout(searchDebounceRef.current);
+                          if (text.trim()) {
+                            searchDebounceRef.current = setTimeout(() => {
+                              handleSearchPlayers(text);
+                            }, 300);
+                          } else {
+                            setSearchResults([]);
+                          }
+                        }}
                         autoCapitalize="none"
                         autoCorrect={false}
                       />
                       <TouchableOpacity 
                         style={[styles.confirmButton, { paddingHorizontal: 20, justifyContent: 'center', borderRadius: 12 }]} 
-                        onPress={handleSearchPlayers}
+                        onPress={() => handleSearchPlayers()}
                         disabled={searchLoading}
                       >
                         {searchLoading ? (
@@ -3229,7 +3280,7 @@ function AppContent() {
                       incomingRequests.map(req => (
                         <View key={req.id} style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: 12, padding: 14, marginBottom: 12 }}>
                           <Text style={{ color: '#fff', fontSize: 15, fontWeight: 'bold', marginBottom: 12 }}>
-                            ⚔️ {req.sender_name} has challenged you!
+                            âš”ï¸ {req.sender_name} has challenged you!
                           </Text>
                           <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'flex-end' }}>
                             <TouchableOpacity 
@@ -3261,7 +3312,7 @@ function AppContent() {
             </View>
           )}
 
-          {/* Staking removed — users play freely */}
+          {/* Staking removed â€” users play freely */}
 
           {/* Bot Count Modal */}
           <BotCountModal visible={showBotCountModal} onSelect={startBotGame} onClose={() => setShowBotCountModal(false)} />
@@ -3273,10 +3324,10 @@ function AppContent() {
       {showSuspendedModal && (
         <View style={styles.modalOverlay}>
           <View style={styles.modalCard}>
-            <Text style={[styles.modalTitle, { color: '#ef4444' }]}>⚠️ Account Suspended</Text>
+            <Text style={[styles.modalTitle, { color: '#ef4444' }]}>âš ï¸ Account Suspended</Text>
             {appealStatus === 'success' ? (
               <View style={{ alignItems: 'center', paddingVertical: 12 }}>
-                <Text style={{ fontSize: 40, marginBottom: 12 }}>✉️</Text>
+                <Text style={{ fontSize: 40, marginBottom: 12 }}>âœ‰ï¸</Text>
                 <Text style={{ color: '#4ade80', fontSize: 16, fontWeight: 'bold', marginBottom: 8, textAlign: 'center' }}>Appeal Submitted!</Text>
                 <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13, textAlign: 'center', lineHeight: 20 }}>
                   Your appeal has been received. The admin will review it and restore your account if approved.
@@ -3356,15 +3407,15 @@ export default function App() {
   );
 }
 
-// ─────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // STYLES
-// ─────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#0f0c29' },
   bg: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: '#1a1035' },
 
   scrollContent: { flexGrow: 1, padding: 20, paddingTop: 10, paddingBottom: 36 },
-  keyboardView: { flex: 1, justifyContent: 'center', minHeight: '100%' },
+  keyboardView: { flexGrow: 1 },
 
   titleContainer: { alignItems: 'center', marginBottom: 36, marginTop: 40 },
   gameTitle: { fontSize: 50, fontWeight: 'bold', color: '#fff', textShadowColor: 'rgba(138,43,226,0.9)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 22, marginBottom: 8 },
@@ -3515,13 +3566,13 @@ const styles = StyleSheet.create({
   historyCards: { color: 'rgba(255,255,255,0.72)', fontSize: 13, marginTop: 3 },
 
   lobbyScroll: { flex: 1 },
-  lobbyContent: { flexGrow: 1, justifyContent: 'center', alignItems: 'center', padding: 20, paddingTop: 48, paddingBottom: 48 },
+  lobbyContent: { flexGrow: 1, alignItems: 'center', padding: 20, paddingTop: 48, paddingBottom: 48 },
   lobbyTitle: { fontSize: 24, fontWeight: 'bold', color: '#fff', textAlign: 'center', marginBottom: 10, flexShrink: 1 },
   lobbySubtext: { fontSize: 14, color: 'rgba(255,255,255,0.65)', textAlign: 'center', marginBottom: 16, flexShrink: 1 },
   roomCodeContainer: { backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: 8, paddingVertical: 14, paddingHorizontal: 18, borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)', alignItems: 'center', marginBottom: 10, width: '100%' },
   roomCodeText: { fontSize: 30, fontWeight: 'bold', color: '#fff', letterSpacing: 5, textShadowColor: 'rgba(168,85,247,0.8)', textShadowOffset: { width: 0, height: 0 }, textShadowRadius: 14, textAlign: 'center' },
   waitingText: { fontSize: 14, color: 'rgba(255,255,255,0.75)', textAlign: 'center', fontStyle: 'italic' },
-  joinedPlayersCard: { width: '100%', backgroundColor: 'rgba(0,0,0,0.22)', borderRadius: 8, padding: 12, marginTop: 14, borderWidth: 1, borderColor: 'rgba(255,255,255,0.12)' },
+  joinedPlayersCard: { width: '100%', backgroundColor: 'rgba(0,0,0,0.22)', borderRadius: 8, padding: 12, marginTop: 30, borderWidth: 1, borderColor: 'rgba(255,255,255,0.12)' },
   joinedPlayersTitle: { color: '#fff', fontSize: 14, fontWeight: 'bold', marginBottom: 10, textAlign: 'center' },
   joinedPlayerRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 8, paddingHorizontal: 10, borderRadius: 8, backgroundColor: 'rgba(255,255,255,0.07)', marginBottom: 8, minWidth: 0 },
   joinedPlayerIndex: { color: '#c084fc', fontSize: 13, fontWeight: 'bold', width: 18, textAlign: 'center' },
@@ -3530,7 +3581,7 @@ const styles = StyleSheet.create({
   poweredByText: { color: 'rgba(255,255,255,0.45)', fontSize: 12, fontWeight: '700', letterSpacing: 1, marginTop: 2, textAlign: 'center' },
 
   loadingOverlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.75)', justifyContent: 'center', alignItems: 'center', zIndex: 999 },
-  loadingText: { color: '#fff', fontSize: 17, fontWeight: 'bold', marginTop: 14 },
+  loadingText: { color: '#fff', fontSize: 17, fontWeight: 'bold', marginTop: 30 },
 
   // Auth styles
   authContainer: { flex: 1, justifyContent: 'center', padding: 24, paddingTop: 60 },
