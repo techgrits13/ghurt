@@ -26,8 +26,11 @@ let BannerAdSize: any = {
 };
 let TestIds: any = { APP_OPEN: '', INTERSTITIAL: '', REWARDED: '', BANNER: '' };
 
+let mobileAds: any = null;
+
 try {
   const adsLib = require('react-native-google-mobile-ads');
+  mobileAds = adsLib.default ?? adsLib;
   AppOpenAd = adsLib.AppOpenAd;
   InterstitialAd = adsLib.InterstitialAd;
   RewardedAd = adsLib.RewardedAd;
@@ -53,7 +56,7 @@ try {
   console.warn('[AdMobService] Google Mobile Ads not loaded — mock mode active.', e);
 }
 
-// ── Ad Unit IDs ──────────────────────────────────────────────────────────────
+// ── Real Production Ad Unit IDs ──────────────────────────────────────────────
 // ADMOB POLICY COMPLIANCE:
 //   • Banner        — shown only on non-gameplay lobby / waiting / menu screens.
 //   • App Open      — shown on cold-start and foreground resume; 2-HOUR cooldown;
@@ -62,10 +65,10 @@ try {
 //   • Interstitial  — only at natural break points (game-over → menu).
 //   • Rewarded      — strictly user-initiated; coins granted ONLY via EARNED_REWARD.
 export const AD_UNIT_IDS = {
-  appOpen:      __DEV__ ? (TestIds.APP_OPEN      || 'ca-app-pub-3940256099942544/9257395921')  : 'ca-app-pub-1258030992044122/9763713445',
-  interstitial: __DEV__ ? (TestIds.INTERSTITIAL  || 'ca-app-pub-3940256099942544/1033173712') : 'ca-app-pub-1258030992044122/3661339529',
-  rewarded:     __DEV__ ? (TestIds.REWARDED       || 'ca-app-pub-3940256099942544/5224354917') : 'ca-app-pub-1258030992044122/9380570064',
-  banner:       __DEV__ ? (TestIds.BANNER         || 'ca-app-pub-3940256099942544/6300978111') : 'ca-app-pub-1258030992044122/5354072447',
+  appOpen:      'ca-app-pub-1258030992044122/9763713445',
+  interstitial: 'ca-app-pub-1258030992044122/3661339529',
+  rewarded:     'ca-app-pub-1258030992044122/9380570064',
+  banner:       'ca-app-pub-1258030992044122/5354072447',
 };
 
 export { BannerAdSize, adsSupported };
@@ -104,6 +107,10 @@ class AdMobService {
       return;
     }
     try {
+      if (typeof mobileAds === 'function') {
+        await mobileAds().initialize().catch((e: any) => console.warn('[AdMobService] SDK initialize non-blocking warning:', e));
+      }
+
       // Restore last-shown timestamp from storage
       const stored = await AsyncStorage.getItem(ASYNC_KEY_LAST_OPEN);
       if (stored) this.appOpenLastShownAt = parseInt(stored, 10) || 0;

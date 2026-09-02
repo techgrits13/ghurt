@@ -465,7 +465,7 @@ window.doLogin = async () => {
     accessToken = data.access_token;
 
     // Verify admin (gracefully handles missing edge function)
-    let check: any = {};
+    let check = {};
     try {
       check = await adminGet('financial_summary');
     } catch (_) {}
